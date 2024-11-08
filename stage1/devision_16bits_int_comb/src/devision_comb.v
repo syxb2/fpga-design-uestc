@@ -5,8 +5,8 @@
  * y: quotient
  * remainder: remiander
  * 
- * 组合逻辑反映在电路上，是十六个子电路串起来的。更加复杂，所以延迟很大。
- * 而时序逻辑是一个电路，里面有一个状态机，根据状态机的状态来决定电路的行为。
+ * Copyright © 2024 Bai Jiale 578767478@qq.com
+ * License: MIT
  */
 module devision_comb(a, b, y, remainder);
     parameter WIDTH = 16;

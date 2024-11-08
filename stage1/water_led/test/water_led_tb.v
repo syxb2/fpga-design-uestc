@@ -1,6 +1,5 @@
 // tb文件本身没有输入输出，为的是调用源文件的功能进而测试它
 `timescale 1ns/1ns
-`include "/Users/baijiale/Documents/Code/fpga_design_uestc/water_led/src/water_led.v"
 
 module water_led_tb();
     reg clk;
