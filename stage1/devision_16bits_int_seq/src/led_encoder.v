@@ -2,24 +2,14 @@
  * Copyright © 2024 Bai Jiale 578767478@qq.com
  * License: MIT
  */
-
-// module led_encoder(in, out1, out2, out3, out4, led_in, led_out);
-module led_encoder(in, out1, out2, out3, out4, led1, led2, led3, led4);
+module led_encoder(in, out1, out2, out3, out4);
     input wire[15:0] in;
-    // input wire led_in;
     output reg[6:0] out1;
     output reg[6:0] out2;
     output reg[6:0] out3;
     output reg[6:0] out4;
-    output reg led1;
-    output reg led2;
-    output reg led3;
-    output reg led4;
-    // output reg led_out;
 
     always@(in) begin
-        led1 = 1'b1;
-        #10
         case(in[3:0])
             4'b0000: out1 = 7'b0111111; // 0
             4'b0001: out1 = 7'b0000110; // 1
@@ -39,9 +29,6 @@ module led_encoder(in, out1, out2, out3, out4, led1, led2, led3, led4);
             4'b1111: out1 = 7'b1110001; // F
         endcase
 
-        led1 = 1'b0;
-        led2 = 1'b1;
-        #10
         case(in[7:4])
             4'b0000: out2 = 7'b0111111; // 0
             4'b0001: out2 = 7'b0000110; // 1
@@ -61,10 +48,6 @@ module led_encoder(in, out1, out2, out3, out4, led1, led2, led3, led4);
             4'b1111: out2 = 7'b1110001; // F
         endcase
 
-        led1 = 1'b0;
-        led2 = 1'b0;
-        led3 = 1'b1;
-        #10
         case(in[11:8])
             4'b0000: out3 = 7'b0111111; // 0
             4'b0001: out3 = 7'b0000110; // 1
@@ -84,11 +67,6 @@ module led_encoder(in, out1, out2, out3, out4, led1, led2, led3, led4);
             4'b1111: out3 = 7'b1110001; // F
         endcase
 
-        led1 = 1'b0;
-        led2 = 1'b0;
-        led3 = 1'b0;
-        led4 = 1'b1;
-        #10
         case(in[15:12])
             4'b0000: out4 = 7'b0111111; // 0
             4'b0001: out4 = 7'b0000110; // 1
