@@ -1,3 +1,7 @@
+/**
+ * Copyright © 2024 Bai Jiale 578767478@qq.com
+ * License: MIT
+ */
 `timescale 1ns/1ns
 
 module devision_seq_tb();

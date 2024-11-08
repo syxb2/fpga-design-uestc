@@ -4,13 +4,13 @@
  * Copyright © 2024 Bai Jiale 578767478@qq.com
  * License: MIT
  */
-module devision_seq(clk, rst, start, done, a, b, y, remainder);
+module devision_seq(clk, rst, a, b, y, remainder);
     parameter WIDTH = 16;
 
     input wire clk;
     input wire rst; // 重置信号，初始化寄存器
     input wire start; // 开始信号
-    output reg done;
+    reg done;
 
     input wire[WIDTH-1:0] a;
     input wire[WIDTH-1:0] b;
@@ -39,12 +39,10 @@ module devision_seq(clk, rst, start, done, a, b, y, remainder);
             case (state)
                 0: begin
                     count <= 16;
-                    if (start) begin
-                        Ra = {16'h0000, a};
-                        Rb = b;
-                        Rc = 16'h0000;
-                        state <= 1;
-                    end
+                    Ra = {16'h0000, a};
+                    Rb = b;
+                    Rc = 16'h0000;
+                    state <= 1;
                 end
 
                 1: begin
