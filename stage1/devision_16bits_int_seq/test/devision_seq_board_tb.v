@@ -13,7 +13,7 @@ module devision_seq_board_tb();
     reg[15:0] b;
     wire[15:0] y;
     wire[15:0] remainder;
-    wire[6:0] out1;
+    wire[6:0] out;
     wire led1;
     wire led2;
     wire led3;
@@ -32,7 +32,7 @@ module devision_seq_board_tb();
 
     led_encoder uut_led(
         .in         (y),
-        .out1       (out1),
+        .out       (out),
         .led1       (led1),
         .led2       (led2),
         .led3       (led3),

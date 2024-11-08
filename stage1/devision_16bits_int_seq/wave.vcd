@@ -1,5 +1,5 @@
 $date
-	Fri Nov  8 22:28:37 2024
+	Fri Nov  8 22:41:38 2024
 $end
 $version
 	Icarus Verilog
@@ -10,7 +10,7 @@ $end
 $scope module devision_seq_board_tb $end
 $var wire 16 ! y [15:0] $end
 $var wire 16 " remainder [15:0] $end
-$var wire 7 # out1 [6:0] $end
+$var wire 7 # out [6:0] $end
 $var wire 1 $ led4 $end
 $var wire 1 % led3 $end
 $var wire 1 & led2 $end
@@ -43,7 +43,7 @@ $var reg 1 ' led1 $end
 $var reg 1 & led2 $end
 $var reg 1 % led3 $end
 $var reg 1 $ led4 $end
-$var reg 7 9 out1 [6:0] $end
+$var reg 7 9 out [6:0] $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
