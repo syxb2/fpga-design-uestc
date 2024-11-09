@@ -20,15 +20,23 @@ BUILD_DIR = ./build
 ######################################
 # source
 ######################################
-# V sources
+# V sources:
+# Version 1
 # V_SOURCES = \
 # ./test/devision_seq_tb.v \
 # ./src/devision_seq.v \
 # ./src/led_encoder.v
+
+# Version 2
+# V_SOURCES = \
+# ./test/devision_seq_board_tb.v \
+# ./src/devision_seq_board.v \
+# ./src/led_encoder_board.v
+
+# Version 3
 V_SOURCES = \
-./test/devision_seq_board_tb.v \
-./src/devision_seq_board.v \
-./src/led_encoder_board.v
+./test/devision_seq_led_board_tb.v \
+./src/devision_seq_led_board.v
 
 # # V includes
 # V_INCLUDES =  \

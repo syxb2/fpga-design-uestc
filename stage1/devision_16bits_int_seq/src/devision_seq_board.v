@@ -4,7 +4,7 @@
  * Copyright © 2024 Bai Jiale 578767478@qq.com
  * License: MIT
  */
-module devision_seq_board(clk, rst, start, done, a, b, y, remainder);
+module devision_seq_board(clk, rst, start, done, y);
     parameter WIDTH = 16;
 
     input wire clk;
@@ -12,11 +12,11 @@ module devision_seq_board(clk, rst, start, done, a, b, y, remainder);
     input wire start; // 开始信号
     output reg done;
 
-    input wire[WIDTH-1:0] a;
-    input wire[WIDTH-1:0] b;
     output reg[WIDTH-1:0] y;
-    output reg[WIDTH-1:0] remainder;
+    reg[WIDTH-1:0] remainder;
 
+    reg[WIDTH-1:0] a;
+    reg[WIDTH-1:0] b;
     reg[2*WIDTH-1:0] Ra; // 存储被除数和余数
     reg[WIDTH-1:0] Rb; // 存储除数
     reg[WIDTH-1:0] Rc; // 存储商
@@ -26,6 +26,8 @@ module devision_seq_board(clk, rst, start, done, a, b, y, remainder);
     initial begin
         state = 1'b0;
         done = 1'b0;
+        a = 16'd32200;
+        b = 16'd37;
     end
 
     always@(posedge clk or posedge rst) begin
