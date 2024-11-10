@@ -12,22 +12,22 @@ set_property IOSTANDARD LVCMOS33 [get_ports rst]
 
 # 设置 start 引脚的约束
 # 将 <START_PIN> 替换为 P14
-set_property PACKAGE_PIN P14 [get_ports start]
+set_property PACKAGE_PIN R16 [get_ports start]
 set_property IOSTANDARD LVCMOS33 [get_ports start]
 
 # 设置 done 引脚的约束
 # 将 <DONE_PIN> 替换为 P16
-set_property PACKAGE_PIN P16 [get_ports done]
+set_property PACKAGE_PIN AA4 [get_ports done]
 set_property IOSTANDARD LVCMOS33 [get_ports done]
 
 # 设置数码管引脚的约束
-set_property PACKAGE_PIN U22 [get_ports out1[0]]
-set_property PACKAGE_PIN P19 [get_ports out1[1]]
-set_property PACKAGE_PIN W21 [get_ports out1[2]]
-set_property PACKAGE_PIN V22 [get_ports out1[3]]
-set_property PACKAGE_PIN AB20 [get_ports out1[4]]
-set_property PACKAGE_PIN W22 [get_ports out1[5]]
-set_property PACKAGE_PIN AA20 [get_ports out1[6]]
+set_property PACKAGE_PIN U22 [get_ports out[0]]
+set_property PACKAGE_PIN P19 [get_ports out[1]]
+set_property PACKAGE_PIN W21 [get_ports out[2]]
+set_property PACKAGE_PIN V22 [get_ports out[3]]
+set_property PACKAGE_PIN AB20 [get_ports out[4]]
+set_property PACKAGE_PIN W22 [get_ports out[5]]
+set_property PACKAGE_PIN AA20 [get_ports out[6]]
 
 set_property PACKAGE_PIN K18 [get_ports led1]
 set_property IOSTANDARD LVCMOS33 [get_ports led1]
@@ -40,21 +40,3 @@ set_property IOSTANDARD LVCMOS33 [get_ports led3]
 
 set_property PACKAGE_PIN G20 [get_ports led4]
 set_property IOSTANDARD LVCMOS33 [get_ports led4]
-
-# 为y[15:0]指定I/O标准
-set_property IOSTANDARD LVCMOS33 [get_ports y[0]]
-set_property IOSTANDARD LVCMOS33 [get_ports y[1]]
-set_property IOSTANDARD LVCMOS33 [get_ports y[2]]
-set_property IOSTANDARD LVCMOS33 [get_ports y[3]]
-set_property IOSTANDARD LVCMOS33 [get_ports y[4]]
-set_property IOSTANDARD LVCMOS33 [get_ports y[5]]
-set_property IOSTANDARD LVCMOS33 [get_ports y[6]]
-set_property IOSTANDARD LVCMOS33 [get_ports y[7]]
-set_property IOSTANDARD LVCMOS33 [get_ports y[8]]
-set_property IOSTANDARD LVCMOS33 [get_ports y[9]]
-set_property IOSTANDARD LVCMOS33 [get_ports y[10]]
-set_property IOSTANDARD LVCMOS33 [get_ports y[11]]
-set_property IOSTANDARD LVCMOS33 [get_ports y[12]]
-set_property IOSTANDARD LVCMOS33 [get_ports y[13]]
-set_property IOSTANDARD LVCMOS33 [get_ports y[14]]
-set_property IOSTANDARD LVCMOS33 [get_ports y[15]]

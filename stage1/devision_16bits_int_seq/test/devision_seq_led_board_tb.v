@@ -1,4 +1,6 @@
-`timescale 1ns / 1ps
+`timescale 1ns / 1ns
+// T = 20ns
+// f = 50MHz
 
 module devision_seq_led_board_tb();
     // 参数定义
@@ -19,15 +21,15 @@ module devision_seq_led_board_tb();
 
     // 实例化被测试模块
     devision_seq_led_board uut (
-        .clk(clk),
-        .rst(rst),
-        .start(start),
-        .done(done),
-        .out(out),
-        .led1(led1),
-        .led2(led2),
-        .led3(led3),
-        .led4(led4)
+        .clk    (clk),
+        .rst    (rst),
+        .start  (start),
+        .done   (done),
+        .out    (out),
+        .led1   (led1),
+        .led2   (led2),
+        .led3   (led3),
+        .led4   (led4)
     );
 
     // 时钟生成
@@ -41,7 +43,7 @@ module devision_seq_led_board_tb();
     // 初始化输入信号
     initial begin
         // 初始化信号
-        rst = 1;
+        rst = 0;
         start = 0;
 
         // 监视信号变化
@@ -49,7 +51,6 @@ module devision_seq_led_board_tb();
                  $time, rst, start, done, led1, led2, led3, led4);
 
         // 复位信号
-        #10 rst = 0;
         #10 rst = 1;
         #10 rst = 0;
 
