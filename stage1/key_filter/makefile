@@ -6,8 +6,8 @@ WAVE_TARGET = wave.vcd
 BUILD_DIR = ./build
 # V sources:
 V_SOURCES = \
-./test/eliminate_jitter_tb.v \
-./src/eliminate_jitter.v
+./test/key_filter_tb.v \
+./src/key_filter.v
 # V includes
 # V_INCLUDES =
 # binaries
