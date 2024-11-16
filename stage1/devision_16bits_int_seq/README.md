@@ -1,8 +1,82 @@
 ## 任务三
 
+> 此项目已经上板测试完成。
+
 16位无符号整数除法器设计实现 - 时序逻辑
 
-### Note
+### Release
+
+#### Version 1
+
+```
+./src/devision_seq.v
+./src/led_encoder.v
+./test/devision_seq_tb.v
+```
+
+#### Version 2
+
+```
+./src/devision_seq_board.v
+./src/led_encoder_board.v
+./test/devision_seq_board_tb.v
+```
+
+#### Version 3
+
+source files
+
+```
+./src/devision_seq_led_board.v
+./test/devision_seq_led_board_tb.v
+```
+
+vivado top file
+
+```
+./src/top_level.v
+```
+
+vivado constraint file
+
+```
+./division_seq.xdc
+```
+
+### Usage
+
+make Version 3:
+
+```sh
+make
+```
+
+注：makefile -- source
+
+```makefile
+######################################
+# source
+######################################
+# V sources:
+# Version 1
+# V_SOURCES = \
+# ./test/devision_seq_tb.v \
+# ./src/devision_seq.v \
+# ./src/led_encoder.v
+
+# Version 2
+# V_SOURCES = \
+# ./test/devision_seq_board_tb.v \
+# ./src/devision_seq_board.v \
+# ./src/led_encoder_board.v
+
+# Version 3
+V_SOURCES = \
+./test/devision_seq_led_board_tb.v \
+./src/devision_seq_led_board.v
+```
+
+### Notes
 
 时序逻辑：也就是把 for 循环换成时钟
 

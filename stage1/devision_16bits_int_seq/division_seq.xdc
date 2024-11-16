@@ -29,14 +29,14 @@ set_property PACKAGE_PIN AB20 [get_ports out[4]]
 set_property PACKAGE_PIN W22 [get_ports out[5]]
 set_property PACKAGE_PIN AA20 [get_ports out[6]]
 
-set_property PACKAGE_PIN K18 [get_ports led1]
-set_property IOSTANDARD LVCMOS33 [get_ports led1]
+set_property PACKAGE_PIN K18 [get_ports led4]
+set_property IOSTANDARD LVCMOS33 [get_ports led4]
 
-set_property PACKAGE_PIN K16 [get_ports led2]
-set_property IOSTANDARD LVCMOS33 [get_ports led2]
-
-set_property PACKAGE_PIN L16 [get_ports led3]
+set_property PACKAGE_PIN K16 [get_ports led3]
 set_property IOSTANDARD LVCMOS33 [get_ports led3]
 
-set_property PACKAGE_PIN G20 [get_ports led4]
-set_property IOSTANDARD LVCMOS33 [get_ports led4]
+set_property PACKAGE_PIN L16 [get_ports led2]
+set_property IOSTANDARD LVCMOS33 [get_ports led2]
+
+set_property PACKAGE_PIN G20 [get_ports led1]
+set_property IOSTANDARD LVCMOS33 [get_ports led1]

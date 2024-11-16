@@ -1,9 +1,3 @@
-/**
- * 16bits int devision with sequential logic
- * 
- * Copyright © 2024 Bai Jiale 578767478@qq.com
- * License: MIT
- */
 module devision_seq_led_board(clk, rst, start, done, led1, led2, led3, led4, out);
     parameter WIDTH = 16;
 
@@ -27,32 +21,48 @@ module devision_seq_led_board(clk, rst, start, done, led1, led2, led3, led4, out
     reg[5:0] count; // 计数器，用于控制移位次数（最多16次）
     reg[1:0] state; // 0 表示空闲；1 表示运行中；2 表示已完成
     reg[1:0] digit_select; // 用于选择当前显示的数码管
+    reg[15:0] counter; // 用于计数 50000 个时钟周期
 
     initial begin
         state = 1'b0;
         done = 1'b0;
-        a = 16'd32200;
-        b = 16'd37;
+        a = 16'h2A5E;
+        b = 16'd1;
         led1 = 1'b0;
         led2 = 1'b0;
         led3 = 1'b0;
         led4 = 1'b0;
         digit_select = 2'b00;
+        counter = 0;
     end
 
     always@(posedge clk or posedge rst) begin
-        if (rst) begin
+        if (!rst) begin
             state <= 0;
             done <= 0;
             y <= 0;
             remainder <= 0;
             digit_select <= 2'b00;
+            counter <= 0;
         end
         else begin
+            if (counter < 50000) begin // 50000 个时钟周期(1 ms)后切换数码管
+                counter = counter + 1;
+            end
+            else begin
+                counter <= 0;
+                if (digit_select == 2'b11) begin
+                    digit_select <= 2'b00;
+                end
+                else begin
+                    digit_select <= digit_select + 1;
+                end
+            end 
+
             case (state)
                 0: begin
                     count <= 16;
-                    if (start) begin
+                    if (!start) begin
                         Ra = {16'h0000, a};
                         Rb = b;
                         Rc = 16'h0000;
@@ -86,14 +96,8 @@ module devision_seq_led_board(clk, rst, start, done, led1, led2, led3, led4, out
                     state <= 0;
                 end
             endcase
-
-            // 位选信号选择逻辑
-            // digit_select <= digit_select + 1;
         end
     end
-
-    //TODO 计数器，记 50000 个时钟周期后清零
-    //TODOEND
 
     always@(posedge clk) begin
         case(digit_select)

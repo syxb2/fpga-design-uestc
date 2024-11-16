@@ -37,32 +37,32 @@ module devision_seq_led_board_tb();
         $dumpfile("wave.vcd");
         $dumpvars(0, devision_seq_led_board_tb);
         clk = 0;
-        forever #5 clk = ~clk; // 10ns周期的时钟
+        forever #10 clk = ~clk; // 20ns 周期的时钟
     end
 
     // 初始化输入信号
     initial begin
         // 初始化信号
-        rst = 0;
-        start = 0;
+        rst = 1;
+        start = 1;
 
         // 监视信号变化
         $monitor("time=%0d, rst=%b, start=%b, done=%b, led1=%b, led2=%b, led3=%b, led4=%b", 
-                 $time, rst, start, done, led1, led2, led3, led4);
+                $time, rst, start, done, led1, led2, led3, led4);
 
         // 复位信号
-        #10 rst = 1;
-        #10 rst = 0;
+        #20 rst = 0;
+        #20 rst = 1;
 
         // 开始信号
+        #40 start = 0;
         #20 start = 1;
-        #10 start = 0;
 
         // 等待计算完成
         wait(done);
 
         // 结束仿真
-        #100 $finish;
+        #3000000 $finish;
     end
 
 endmodule
