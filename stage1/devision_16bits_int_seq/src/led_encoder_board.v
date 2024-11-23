@@ -2,7 +2,6 @@
  * Copyright © 2024 Bai Jiale 578767478@qq.com
  * License: MIT
  */
-
 module led_encoder(in, out, led1, led2, led3, led4);
     input wire[15:0] in;
     output reg[6:0] out;
