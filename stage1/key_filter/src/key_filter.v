@@ -7,7 +7,7 @@ module key_filter(clk, rst, in, out);
     input wire in; // 按键输入信号
     output reg out; // 输出稳定的脉冲信号
 
-    parameter MAX = 20'd1000;
+    parameter MAX = 20'd100; // 20ms 计数器最大值
 
     reg[19:0] cnt_delay; // 20ms 延时计数寄存器
     reg en_cnt_delay; // 20ms 延时计数使能
@@ -17,7 +17,8 @@ module key_filter(clk, rst, in, out);
     reg nedge; // 下降沿寄存器
 
     initial begin
-        cnt_delay = 1'b1;
+        cnt_delay = 0;
+        en_cnt_delay = 0;
     end
 
     // 同步打拍
@@ -35,8 +36,8 @@ module key_filter(clk, rst, in, out);
     end
 
     // 下降沿检测
-    always @(posedge clk or negedge rst) begin
-        nedge = ~key_r1 && key_r2; // nedge 为 0 时检测到下降沿
+    always @(posedge clk) begin
+        nedge = ~((~key_r1 && key_r2) || (key_r1 && ~key_r2)); // nedge 为 0 时检测到下降沿
     end
 
     // 20ms 计数器
@@ -53,7 +54,7 @@ module key_filter(clk, rst, in, out);
         // 开始计数
         if (en_cnt_delay) begin
             if (cnt_delay == MAX - 1'b1) begin
-                cnt_delay <= cnt_delay; // 计数计满结束后保持，避免产生多个输出脉冲
+                en_cnt_delay <= 1'b0; // 关闭计数
             end
             else begin
                 cnt_delay <= cnt_delay + 1'b1;
