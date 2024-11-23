@@ -14,14 +14,12 @@ module key_filter_tb();
         .in     (in),
         .out    (filter_out)
     );
-
     counter counter(
         .clk    (clk),
         .rst    (rst),
         .in     (filter_out),
         .out    (count)
     );
-
     led_encoder_1bit led1(
         .clk    (clk),
         .rst    (rst),
