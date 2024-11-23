@@ -7,7 +7,9 @@ BUILD_DIR = ./build
 # V sources:
 V_SOURCES = \
 ./test/key_filter_tb.v \
-./src/key_filter.v
+./src/key_filter.v \
+./src/counter.v \
+./src/led_encoder_1bit.v
 # V includes
 # V_INCLUDES =
 # binaries
