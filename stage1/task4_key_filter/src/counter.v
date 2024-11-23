@@ -1,3 +1,6 @@
+/**
+ * @brief 4 位按键计数器
+ */
 module counter (clk, rst, in, out);
     input wire clk;
     input wire rst;

@@ -16,14 +16,12 @@ module top_level(clk, rst, in, led, out);
         .in     (in),
         .out    (filter_out)
     );
-
     counter counter(
         .clk    (clk),
         .rst    (rst),
         .in     (filter_out),
         .out    (count)
     );
-
     led_encoder_1bit led1(
         .clk    (clk),
         .rst    (rst),

@@ -1,4 +1,6 @@
 /**
+ * @brief 1 位数码管编码器
+ * 
  * Copyright © 2024 Bai Jiale 578767478@qq.com
  * License: MIT
  */
