@@ -1,5 +1,8 @@
 /**
  * @brief 按键滤波模块
+ * 
+ * Copyright © 2024 Bai Jiale syxb2qq.com
+ * License: MIT
  */
 module key_filter(clk, rst, in, out);
     input wire clk;
@@ -22,7 +25,7 @@ module key_filter(clk, rst, in, out);
     end
 
     // 同步打拍
-    always @(posedge clk or negedge rst) begin
+    always @(posedge clk) begin
         if (!rst) begin // rst 低电平有效
             key_r0 <= 1'b1;
             key_r1 <= 1'b1;
@@ -41,7 +44,7 @@ module key_filter(clk, rst, in, out);
     end
 
     // 20ms 计数器
-    always @(posedge clk or negedge rst) begin
+    always @(posedge clk) begin
         if (!rst) begin // rst 低电平有效
             cnt_delay <= 1'b0;
             en_cnt_delay <= 1'b0;
@@ -63,7 +66,7 @@ module key_filter(clk, rst, in, out);
     end
 
     // out 脉冲信号赋值
-    always @(posedge clk or negedge rst) begin
+    always @(posedge clk) begin
         if (!rst) begin
             out <= 1'b0;
         end

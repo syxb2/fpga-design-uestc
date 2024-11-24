@@ -1,7 +1,10 @@
 /**
- * @brief 4 位按键计数器
+ * @brief 1 位 16 进制数按键计数器
+ * 
+ * Copyright © 2024 Bai Jiale syxb2@qq.com
+ * License: MIT
  */
-module counter (clk, rst, in, out);
+module counter(clk, rst, in, out);
     input wire clk;
     input wire rst;
     input wire in; // 按键输入信号

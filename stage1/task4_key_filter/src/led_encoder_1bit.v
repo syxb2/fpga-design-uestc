@@ -1,7 +1,7 @@
 /**
  * @brief 1 位数码管编码器
  * 
- * Copyright © 2024 Bai Jiale 578767478@qq.com
+ * Copyright © 2024 Bai Jiale syxb2@qq.com
  * License: MIT
  */
 module led_encoder_1bit(clk, rst, in, out, led);
