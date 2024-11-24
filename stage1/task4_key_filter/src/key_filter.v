@@ -7,7 +7,7 @@ module key_filter(clk, rst, in, out);
     input wire in; // 按键输入信号
     output reg out; // 输出稳定的脉冲信号
 
-    parameter MAX = 20'd100; // 20ms 计数器最大值
+    parameter MAX = 20'd1_000_000; // 20ms 计数器最大值
 
     reg[19:0] cnt_delay; // 20ms 延时计数寄存器
     reg en_cnt_delay; // 20ms 延时计数使能
