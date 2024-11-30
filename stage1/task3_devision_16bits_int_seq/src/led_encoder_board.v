@@ -1,5 +1,5 @@
 /**
- * Copyright © 2024 Bai Jiale 578767478@qq.com
+ * Copyright © 2024 Bai Jiale syxb2@qq.com
  * License: MIT
  */
 module led_encoder(in, out, led1, led2, led3, led4);
