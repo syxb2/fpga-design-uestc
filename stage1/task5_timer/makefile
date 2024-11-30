@@ -9,9 +9,13 @@ BUILD_DIR = ./build
 
 # V sources:
 # make led_encoder
+# V_SOURCES = \
+# ./test/led_encoder_tb.v \
+# ./src/led_encoder.v
+# make timer
 V_SOURCES = \
-./test/led_encoder_tb.v \
-./src/led_encoder.v
+./test/timer_tb.v \
+./src/timer.v
 
 # V includes
 # V_INCLUDES =
