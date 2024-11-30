@@ -15,18 +15,17 @@ module timer(clk, rst, start, out);
     output reg[23:0] out; // 6 digits, each 4 bits
 
     reg state; // 0: stop, 1: start
-    reg[23:0] counter;
+    reg[25:0] counter;
 
     initial begin
         state = 1'b0;
         counter = 0;
         out = 24'b0; // Initialize all digits to 0
+        // state = 1'b1;
     end
 
-    always@(posedge clk) begin
-        if (!start) begin
-            state <= 1'b1;
-        end
+    always@(negedge start) begin
+        state <= 1'b1;
     end
 
     always@(posedge clk or negedge rst) begin
@@ -36,7 +35,7 @@ module timer(clk, rst, start, out);
             out <= 24'b0;
         end
         else begin
-            if (counter < 50000000) begin // 50000000 个时钟周期 (1 s) 后 out + 1
+            if (counter < 50000000) begin // 50000000 个时钟周期 (1s) 后 out + 1
             // if (counter < 500) begin // test
                 counter = counter + 1;
             end
@@ -50,11 +49,11 @@ module timer(clk, rst, start, out);
                     1'b1: begin
                         if (out[3:0] == 4'b1001) begin
                             out[3:0] <= 4'b0000;
-                            if (out[7:4] == 4'b0110) begin
+                            if (out[7:4] == 4'b0101) begin
                                 out[7:4] <= 4'b0000;
                                 if (out[11:8] == 4'b1001) begin
                                     out[11:8] <= 4'b0000;
-                                    if (out[15:12] == 4'b0110) begin
+                                    if (out[15:12] == 4'b0101) begin
                                         out[15:12] <= 4'b0000;
                                         if (out[19:16] == 4'b1001) begin
                                             out[19:16] <= 4'b0000;
