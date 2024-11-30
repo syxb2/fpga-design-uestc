@@ -1,6 +1,5 @@
 /**
- * @brief 
-     * 6 digits decimal system LED encoder module
+ * @brief 6 digits decimal(十进制) system LED encoder module
  * @in
      * clk: clock signal
      * rst: reset signal
