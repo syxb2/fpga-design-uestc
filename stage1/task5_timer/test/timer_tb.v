@@ -1,4 +1,4 @@
-`timescale 1ns/1ps
+`timescale 1ns/1ns
 
 module timer_tb;
     reg clk;
@@ -35,15 +35,15 @@ module timer_tb;
 
         // Start the timer
         start = 1;
-        #100000000; // Wait for 1 second
+        #100000; // Wait for 1 second
 
         // Stop the timer
         start = 0;
-        #100000000; // Wait for 1 second
+        #100000; // Wait for 1 second
 
         // Start the timer again
         start = 1;
-        #100000000; // Wait for 1 second
+        #100000; // Wait for 1 second
 
         // Finish simulation
         $stop;

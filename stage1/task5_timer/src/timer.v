@@ -47,6 +47,7 @@ module timer(clk, rst, start, out);
         end
         else begin
             if (counter < 50000000) begin // 50000000 个时钟周期 (1 s) 后 out + 1
+            // if (counter < 500) begin // test
                 counter = counter + 1;
             end
             else begin
