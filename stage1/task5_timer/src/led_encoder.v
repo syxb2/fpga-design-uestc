@@ -24,7 +24,7 @@ module led_encoder(clk, rst, in, out, dig);
         counter = 0;
     end
 
-    always@(posedge clk or posedge rst) begin
+    always @(posedge clk or posedge rst) begin
         if (!rst) begin
             bits_select <= 0;
             counter <= 0;
@@ -45,7 +45,7 @@ module led_encoder(clk, rst, in, out, dig);
         end
     end
 
-    always@(posedge clk) begin
+    always @(posedge clk) begin
         case(bits_select)
             0: begin
                 dig[0] = 1'b1; dig[1] = 1'b0; dig[2] = 1'b0; dig[3] = 1'b0; dig[4] = 1'b0; dig[5] = 1'b0;
