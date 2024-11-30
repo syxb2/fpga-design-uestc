@@ -4,7 +4,7 @@ module timer_tb;
     reg clk;
     reg rst;
     reg start;
-    wire [5:0][3:0] out;
+    wire [23:0] out;
 
     // Instantiate the timer module
     timer uut(

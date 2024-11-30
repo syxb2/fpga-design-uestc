@@ -5,7 +5,7 @@ module top_level(
     output wire [6:0] out,
     output wire [5:0] dig
 );
-    wire [5:0][3:0] timer_out;
+    wire [23:0] timer_out;
 
     // Instantiate the timer module
     timer u_timer (
