@@ -1,42 +1,50 @@
 # target
 TARGET = vout
+
 # Wave out
 WAVE_TARGET = wave.vcd
+
 # Build path
 BUILD_DIR = ./build
+
 # V sources:
 # Version 1
 # V_SOURCES = \
 # ./test/devision_seq_tb.v \
-# ./src/devision_seq.v \
-# ./src/led_encoder.v
-
 # Version 2
 # V_SOURCES = \
 # ./test/devision_seq_board_tb.v \
-# ./src/devision_seq_board.v \
-# ./src/led_encoder_board.v
-
 # Version 3
 V_SOURCES = \
 ./test/devision_seq_led_board_tb.v \
-./src/devision_seq_led_board.v
+
 # V includes
-# V_INCLUDES =
-# binaries
-# PREFIX =
+# version1
+# V_INCLUDES = \
+# ./mod/devision_seq.v \
+# ./mod/led_encoder.v \
+# version2
+# V_INCLUDES = \
+# ./mod/devision_seq_board.v \
+# ./mod/led_encoder_board.v \
+# version3
+V_INCLUDES = \
+./mod/devision_seq_led_board.v \
+
 # compiler
 CC = iverilog
 VP = vvp
 
-# default action: build all
-all:$(WAVE_TARGET)
+# binaries
+# PREFIX =
 
-$(WAVE_TARGET):$(BUILD_DIR)/$(TARGET).out | $(BUILD_DIR)
+# default action: build all
+all: $(WAVE_TARGET)
+
+$(WAVE_TARGET): $(BUILD_DIR)/$(TARGET).out
 	@$(VP) -n $^
-$(BUILD_DIR)/$(TARGET).out:$(V_SOURCES) | $(BUILD_DIR)
+$(BUILD_DIR)/$(TARGET).out: $(BUILD_DIR) $(V_SOURCES) $(V_INCLUDES)
 	@$(CC) -o $@ $(V_SOURCES) 
-# $@ 表示 58 行所有内容
 $(BUILD_DIR):
 	@mkdir $@
 
@@ -44,6 +52,6 @@ $(BUILD_DIR):
 .PHONY:clean
 
 clean:
-	rm Rf wave.vcd $(BUILD_DIR)/*.out
+	rm -r wave.vcd $(BUILD_DIR)
 plot:
 	@gtkwave wave.vcd

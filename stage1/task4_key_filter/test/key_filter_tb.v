@@ -1,4 +1,7 @@
 `timescale 1ns/1ns
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task4_key_filter/mod/counter.v"
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task4_key_filter/mod/key_filter.v"
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task4_key_filter/mod/led_encoder_1bit.v"
 
 module key_filter_tb();
     reg clk;

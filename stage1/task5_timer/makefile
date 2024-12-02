@@ -8,33 +8,35 @@ WAVE_TARGET = wave.vcd
 BUILD_DIR = ./build
 
 # V sources:
-# make led_encoder
-# V_SOURCES = \
-# ./test/led_encoder_tb.v \
-# ./src/led_encoder.v
 # make timer
 V_SOURCES = \
-./test/timer_tb.v \
-./src/timer.v
+./test/timer_tb.v
+# make led_encoder
+# V_SOURCES = \
+# ./test/led_encoder_tb.v
 
 # V includes
-# V_INCLUDES =
-
-# binaries
-# PREFIX =
+# make timer
+V_INCLUDES = \
+./mod/timer.v
+# make led_encoder
+# V_INCLUDES = \
+# ./mod/led_encoder.v
 
 # compiler
 CC = iverilog
 VP = vvp
 
-# default action: build all
-all:$(WAVE_TARGET)
+# binaries
+# PREFIX =
 
-$(WAVE_TARGET):$(BUILD_DIR)/$(TARGET).out | $(BUILD_DIR)
+# default action: build all
+all: $(WAVE_TARGET)
+
+$(WAVE_TARGET): $(BUILD_DIR)/$(TARGET).out
 	@$(VP) -n $^
-$(BUILD_DIR)/$(TARGET).out:$(V_SOURCES) | $(BUILD_DIR)
+$(BUILD_DIR)/$(TARGET).out: $(BUILD_DIR) $(V_SOURCES) $(V_INCLUDES)
 	@$(CC) -o $@ $(V_SOURCES) 
-# $@ 表示 58 行所有内容
 $(BUILD_DIR):
 	@mkdir $@
 
@@ -42,6 +44,6 @@ $(BUILD_DIR):
 .PHONY:clean
 
 clean:
-	rm Rf wave.vcd $(BUILD_DIR)/*.out
+	rm -r wave.vcd $(BUILD_DIR)
 plot:
 	@gtkwave wave.vcd

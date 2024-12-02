@@ -1,5 +1,5 @@
 `timescale 1ns/1ns //第一个是时间单位，第二个是时间精度
-`include "/Users/baijiale/Documents/Code/fpga_design_uestc/decoder_3_8/src/decoder_3_8.v"
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task1_decoder_3_8/mod/decoder_3_8.v"
 
 module decoder_3_8_tb; //由于这是仿真文件所以不需要写模块端口号
     //开始例化

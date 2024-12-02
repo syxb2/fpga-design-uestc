@@ -9,16 +9,16 @@
 #### Version 1
 
 ```
-./src/devision_seq.v
-./src/led_encoder.v
+./devision_seq.v
+./led_encoder.v
 ./test/devision_seq_tb.v
 ```
 
 #### Version 2
 
 ```
-./src/devision_seq_board.v
-./src/led_encoder_board.v
+./devision_seq_board.v
+./led_encoder_board.v
 ./test/devision_seq_board_tb.v
 ```
 
@@ -27,14 +27,14 @@
 source files
 
 ```
-./src/devision_seq_led_board.v
+./devision_seq_led_board.v
 ./test/devision_seq_led_board_tb.v
 ```
 
 vivado top file
 
 ```
-./src/top_level.v
+./top_level.v
 ```
 
 vivado constraint file
@@ -61,19 +61,19 @@ make
 # Version 1
 # V_SOURCES = \
 # ./test/devision_seq_tb.v \
-# ./src/devision_seq.v \
-# ./src/led_encoder.v
+# ./devision_seq.v \
+# ./led_encoder.v
 
 # Version 2
 # V_SOURCES = \
 # ./test/devision_seq_board_tb.v \
-# ./src/devision_seq_board.v \
-# ./src/led_encoder_board.v
+# ./devision_seq_board.v \
+# ./led_encoder_board.v
 
 # Version 3
 V_SOURCES = \
 ./test/devision_seq_led_board_tb.v \
-./src/devision_seq_led_board.v
+./devision_seq_led_board.v
 ```
 
 ### Notes

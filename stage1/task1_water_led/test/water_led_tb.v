@@ -1,5 +1,6 @@
 // tb文件本身没有输入输出，为的是调用源文件的功能进而测试它
 `timescale 1ns/1ns
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task1_water_led/mod/water_led.v"
 
 module water_led_tb();
     reg clk;
@@ -29,5 +30,4 @@ module water_led_tb();
     always begin
         #5 clk = ~clk; // f = 100MHz, T = 10ns
     end
-
 endmodule

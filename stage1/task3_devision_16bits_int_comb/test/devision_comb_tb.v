@@ -1,5 +1,6 @@
 `timescale 1ns/1ns
-// `include "/Users/baijiale/Documents/Code/fpga_design_uestc/devision_16bits_int/src/devision_com.v"
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task3_devision_16bits_int_comb/mod/devision_comb.v"
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task3_devision_16bits_int_comb/mod/led_encoder.v"
 
 module devision_comb_tb;
     // 参数定义

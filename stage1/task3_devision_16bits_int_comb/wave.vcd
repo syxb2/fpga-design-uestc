@@ -1,0 +1,161 @@
+$date
+	Mon Dec  2 11:45:15 2024
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ns
+$end
+$scope module devision_comb_tb $end
+$var wire 16 ! y [15:0] $end
+$var wire 16 " remainder [15:0] $end
+$var wire 7 # out4 [6:0] $end
+$var wire 7 $ out3 [6:0] $end
+$var wire 7 % out2 [6:0] $end
+$var wire 7 & out1 [6:0] $end
+$var parameter 32 ' WIDTH $end
+$var reg 16 ( a [15:0] $end
+$var reg 16 ) b [15:0] $end
+$scope module uut $end
+$var wire 16 * a [15:0] $end
+$var wire 16 + b [15:0] $end
+$var parameter 32 , WIDTH $end
+$var reg 32 - Ra [31:0] $end
+$var reg 16 . Rb [15:0] $end
+$var reg 16 / Rc [15:0] $end
+$var reg 16 0 remainder [15:0] $end
+$var reg 16 1 y [15:0] $end
+$var integer 32 2 i [31:0] $end
+$upscope $end
+$scope module uut_led $end
+$var wire 16 3 in [15:0] $end
+$var reg 7 4 out1 [6:0] $end
+$var reg 7 5 out2 [6:0] $end
+$var reg 7 6 out3 [6:0] $end
+$var reg 7 7 out4 [6:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b10000 ,
+b10000 '
+$end
+#0
+$dumpvars
+bx 7
+bx 6
+bx 5
+bx 4
+bx 3
+bx 2
+bx 1
+bx 0
+b0 /
+b0 .
+b0 -
+bx +
+bx *
+bx )
+bx (
+bx &
+bx %
+bx $
+bx #
+bx "
+bx !
+$end
+#10
+b111111 #
+b111111 7
+b111111 $
+b111111 6
+b1011011 %
+b1011011 5
+b110 &
+b110 4
+b1 "
+b1 0
+b100001 !
+b100001 1
+b100001 3
+b100001 /
+b10000 2
+b11 .
+b10000000000000000 -
+b11 )
+b11 +
+b1100100 (
+b1100100 *
+#20
+b111111 %
+b111111 5
+b111 &
+b111 4
+b111 !
+b111 1
+b111 3
+b10000 2
+b111 /
+b111 .
+b10000000000000000 -
+b111 )
+b111 +
+b110010 (
+b110010 *
+#30
+b1011110 &
+b1011110 4
+b101 "
+b101 0
+b1101 !
+b1101 1
+b1101 3
+b10000 2
+b1101 /
+b1111 .
+b1010000000000000000 -
+b1111 )
+b1111 +
+b11001000 (
+b11001000 *
+#40
+b110 %
+b110 5
+b1111101 &
+b1111101 4
+b10 "
+b10 0
+b10110 !
+b10110 1
+b10110 3
+b10000 2
+b10110 /
+b111000 .
+b100000000000000000 -
+b111000 )
+b111000 +
+b10011010010 (
+b10011010010 *
+#50
+b110 $
+b110 6
+b111111 %
+b111111 5
+b110 &
+b110 4
+b0 "
+b0 0
+b100000001 !
+b100000001 1
+b100000001 3
+b10000 2
+b100000001 /
+b11111111 .
+b0 -
+b11111111 )
+b11111111 +
+b1111111111111111 (
+b1111111111111111 *
+#60

@@ -1,5 +1,5 @@
 `timescale 1ns/1ns
-`include "/Users/baijiale/Documents/Code/fpga_design_uestc/array_memory/src/array_memory.v"
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task2_array_memory/mod/array_memory.v"
 
 module array_memory_tb();
     parameter width = 4;

@@ -1,4 +1,5 @@
 `timescale 1ns/1ns
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task5_timer/mod/timer.v"
 
 module timer_tb;
     reg clk;

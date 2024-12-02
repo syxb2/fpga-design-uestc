@@ -1,4 +1,5 @@
 `timescale 1ns / 1ns
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task5_timer/mod/led_encoder.v"
 
 module led_encoder_tb;
     reg clk;

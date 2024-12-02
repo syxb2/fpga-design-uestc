@@ -1,6 +1,7 @@
 `timescale 1ns / 1ns
 // T = 20ns
 // f = 50MHz
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task3_devision_16bits_int_seq/mod/devision_seq_led_board.v"
 
 module devision_seq_led_board_tb();
     // 参数定义

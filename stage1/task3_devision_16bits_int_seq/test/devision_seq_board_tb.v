@@ -3,6 +3,8 @@
  * License: MIT
  */
 `timescale 1ns/1ns
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task3_devision_16bits_int_seq/mod/devision_seq_board.v"
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task3_devision_16bits_int_seq/mod/led_encoder_board.v"
 
 module devision_seq_board_tb();
     reg clk;
@@ -24,7 +26,7 @@ module devision_seq_board_tb();
         .y          (y)
     );
 
-    led_encoder uut_led(
+    led_encoder_board uut_led(
         .in         (y),
         .out        (out),
         .led1       (led1),
