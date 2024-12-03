@@ -38,7 +38,7 @@ $(WAVE_TARGET): $(BUILD_DIR)/$(TARGET).out
 $(BUILD_DIR)/$(TARGET).out: $(BUILD_DIR) $(V_SOURCES) $(V_INCLUDES)
 	@$(CC) -o $@ $(V_SOURCES) 
 $(BUILD_DIR):
-	@mkdir $@
+	mkdir $@
 
 .PHONY:help
 .PHONY:clean
@@ -46,4 +46,4 @@ $(BUILD_DIR):
 clean:
 	rm -r wave.vcd $(BUILD_DIR)
 plot:
-	@gtkwave wave.vcd
+	gtkwave wave.vcd

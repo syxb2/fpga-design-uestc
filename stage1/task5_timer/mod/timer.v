@@ -39,16 +39,18 @@ module timer(clk, rst, start, out);
         end
         else begin
             if (counter < 50000000) begin // 50000000 个时钟周期 (1s) 后 out + 1
-            // if (counter < 500) begin // test
+            // if (counter < 500) begin // to test
                 counter = counter + 1;
             end
             else begin
                 counter <= 0;
+
                 // per second execute this
                 case (state)
                     1'b0: begin
                         out <= 24'b0;
                     end
+
                     1'b1: begin
                         if (out[3:0] == 4'b1001) begin
                             out[3:0] <= 4'b0000;
@@ -64,29 +66,17 @@ module timer(clk, rst, start, out);
                                                 out[23:20] <= 4'b0000;
                                                 state <= 1'b0;
                                             end
-                                            else begin
-                                                out[23:20] <= out[23:20] + 1;
-                                            end
+                                            else out[23:20] <= out[23:20] + 1;
                                         end
-                                        else begin
-                                            out[19:16] <= out[19:16] + 1;
-                                        end
+                                        else out[19:16] <= out[19:16] + 1;
                                     end
-                                    else begin
-                                        out[15:12] <= out[15:12] + 1;
-                                    end
+                                    else out[15:12] <= out[15:12] + 1;
                                 end
-                                else begin
-                                    out[11:8] <= out[11:8] + 1;
-                                end
+                                else out[11:8] <= out[11:8] + 1;
                             end
-                            else begin
-                                out[7:4] <= out[7:4] + 1;
-                            end
+                            else out[7:4] <= out[7:4] + 1;
                         end
-                        else begin
-                            out[3:0] <= out[3:0] + 1;
-                        end
+                        else out[3:0] <= out[3:0] + 1;
                     end
                 endcase
             end
