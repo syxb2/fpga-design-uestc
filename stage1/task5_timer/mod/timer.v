@@ -18,23 +18,20 @@ module timer(clk, rst, start, out);
     reg[25:0] counter;
 
     initial begin
-        state = 1'b0;
-        counter = 0;
-        out = 24'b0; // Initialize all digits to 0
-    end
-
-    always @(negedge start) begin
-        state <= 1'b1;
-    end
-
-    always @(negedge rst) begin
+        counter <= 0;
         state <= 1'b0;
+        out <= 24'b0; // Initialize all digits to 0
     end
 
     always @(posedge clk or negedge rst) begin
         if (!rst) begin
             counter <= 0;
             state <= 1'b0;
+            out <= 24'b0;
+        end
+        else if (!start) begin
+            counter <= 0;
+            state <= 1'b1;
             out <= 24'b0;
         end
         else begin
@@ -49,6 +46,8 @@ module timer(clk, rst, start, out);
                 case (state)
                     1'b0: begin
                         out <= 24'b0;
+                        counter <= 0;
+
                     end
 
                     1'b1: begin
