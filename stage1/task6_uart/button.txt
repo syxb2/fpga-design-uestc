@@ -1,0 +1,43 @@
+IDLE
+NEDGE
+PEDGE
+	
+	assign nedge = ~in_1&&in_2;
+	assign pedge = in_1&&~in_2;
+
+	in_1<=in;
+	in_2<=in_1;
+
+	case(state): begin
+		IDLE: begin
+			counter<=0;
+			btnDn<=0;
+			btnUp<=0;
+			if(nedge)
+				state<=NEDGE;
+			else(pedge)
+				state<=PEDGE;
+			else
+				out<=in_2;
+		end
+		NEDGE: begin
+			if(nedge)
+				counter<=0;
+			else if(counter == MAX-1) 
+				btnDn<=1;
+				state <= IDLE;
+			else
+				counter<=counter+1;
+		end
+		NEDGE: begin
+			if(pedge)
+				counter<=0;
+			else if(counter == MAX-1)
+				btnUp<=1;
+				state <= IDLE;
+			else
+				counter<=counter+1;
+		end
+	endcase
+
+		
