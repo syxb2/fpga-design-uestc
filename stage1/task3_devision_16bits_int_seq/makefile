@@ -9,27 +9,27 @@ BUILD_DIR = ./build
 
 # V sources:
 # Version 1
-# V_SOURCES = \
-# ./test/devision_seq_tb.v \
+V_SOURCES = \
+./test/devision_seq_tb.v \
 # Version 2
 # V_SOURCES = \
 # ./test/devision_seq_board_tb.v \
 # Version 3
-V_SOURCES = \
-./test/devision_seq_led_board_tb.v \
+# V_SOURCES = \
+# ./test/devision_seq_led_board_tb.v \
 
 # V includes
 # version1
-# V_INCLUDES = \
-# ./mod/devision_seq.v \
-# ./mod/led_encoder.v \
+V_INCLUDES = \
+./mod/devision_seq.v \
+./mod/led_encoder.v \
 # version2
 # V_INCLUDES = \
 # ./mod/devision_seq_board.v \
 # ./mod/led_encoder_board.v \
 # version3
-V_INCLUDES = \
-./mod/devision_seq_led_board.v \
+# V_INCLUDES = \
+# ./mod/devision_seq_led_board.v \
 
 # compiler
 CC = iverilog
