@@ -41,3 +41,7 @@ clean:
 	rm -r wave.vcd $(BUILD_DIR)
 plot:
 	gtkwave wave.vcd
+deploy:
+	git add .
+	git commit
+	git push
