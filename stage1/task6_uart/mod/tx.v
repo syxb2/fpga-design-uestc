@@ -16,32 +16,19 @@ module tx(clk, rst, tx, tx_data, tx_ready);
     parameter START = 1; // 跳过起始位
     parameter DATA = 2; // 数据位
     parameter STOP = 3; // 停止位
- 
     reg[1:0] state;// 现态
         
     reg[25:0] bps_cnt;
     wire end_bps_cnt;
     reg[3:0] bit_cnt;
-    reg end_bit_cnt; // 接收 1 Byte 数据完成标志
+    reg end_bit_cnt; // 输出相应状态的数据完成标志
     reg[3:0] bit_max;
  
     reg[BIT_MAX-1:0] temp_data; // 输入数据临时缓存
- 
-    reg tx_r0; // 输入数据同步寄存
-    reg tx_r1;
-    
-    // 输入数据寄存
-    always @(posedge clk or negedge rst) begin 
-        if (!rst) begin
-            tx_r0 <= 1;
-            tx_r1 <= 1;
-        end 
-        else begin 
-           tx_r0 <= tx;
-           tx_r1 <= tx_r0;
-        end 
-    end
+    wire flag_n; // 标志位
 
+    assign flag_n = tx_data[0] || tx_data[1] || tx_data[2] || tx_data[3] || tx_data[4] || tx_data[5] || tx_data[6] || tx_data[7];
+ 
     // 时序逻辑描述状态转移
     always @(posedge clk or negedge rst) begin
         if (!rst) begin
@@ -52,19 +39,18 @@ module tx(clk, rst, tx, tx_data, tx_ready);
                 IDLE: begin
                     bps_cnt <= 0;
                     bit_cnt <= 0;
-                    tx_r0 <= 1;
-                    tx_r1 <= 1;
                     temp_data <= 0;
-                    if (!tx) begin
+                    if (flag_n) begin
                         state <= START;
                     end
                 end
 
                 START: begin
                     bit_max = 1;
+                    temp_data <= tx_data;
                     if (end_bit_cnt) begin
                         state = DATA;
-                        bit_cnt = 4'b0000;
+                        bit_cnt = 0;
                         end_bit_cnt = 0;
                     end
                 end
@@ -90,18 +76,25 @@ module tx(clk, rst, tx, tx_data, tx_ready);
         end
     end
 
-    // 数据接收逻辑
-    always @(posedge end_bps_cnt) begin
-        case(state)
+    // 数据输出逻辑
+    always @(posedge clk) begin 
+        case (state)
+            IDLE: tx = 1; // 等待：高电平
+            START: tx = 0; // 起始：低电平
             DATA: begin
-                temp_data[bit_cnt] <= tx_r1;
+                if (temp_data[bit_cnt]) begin
+                    tx= 1;
+                end
+                else begin
+                    tx = 0;
+                end
             end
+            STOP: tx = 1; // 停止：高电平
         endcase
     end
 
     // 输出逻辑
-    assign tx_ready = state == STOP;
-    assign tx_data = (state == STOP) ? temp_data : 0;
+    assign tx_ready = state == IDLE;
               
     // bps_cnt                    
     always @(posedge clk or negedge rst) begin 

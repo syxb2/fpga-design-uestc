@@ -64,7 +64,7 @@ module rx(clk, rst, rx, rx_data, rx_ready);
                     bit_max = 1;
                     if (end_bit_cnt) begin
                         state = DATA;
-                        bit_cnt = 4'b0000;
+                        bit_cnt = 0;
                         end_bit_cnt = 0;
                     end
                 end

@@ -9,13 +9,19 @@ BUILD_DIR = ./build
 
 # V sources:
 # make rx
-V_SOURCES = \
+# V_SOURCES = \
 ./test/rx_tb.v
+# make tx
+V_SOURCES = \
+./test/tx_tb.v
 
 # V includes
 # make rx
-V_INCLUDES = \
+# V_INCLUDES = \
 ./mod/rx.v
+# make tx
+V_INCLUDES = \
+./mod/tx.v
 
 # compiler
 CC = iverilog
