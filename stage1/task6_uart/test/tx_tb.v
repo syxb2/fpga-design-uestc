@@ -1,4 +1,4 @@
-`timescale 1ns/1ps
+`timescale 1ns/1ns
 `include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task6_uart/mod/tx.v"
 
 module tx_tb;

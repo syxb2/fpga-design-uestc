@@ -5,7 +5,7 @@ module tx(clk, rst, tx, tx_data, tx_ready);
     input wire clk;
     input wire rst;
     input wire[BIT_MAX-1:0] tx_data; // 要发送的数据
-    output wire tx_ready; // 发送完成标志
+    output wire tx_ready; // 可以发送标志
     output reg tx; // 输出
 
     parameter BPS_MAX = 5208; // 波特率对应周期数
