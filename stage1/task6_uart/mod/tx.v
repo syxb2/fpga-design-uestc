@@ -1,125 +1,107 @@
 /**
- * @brife 发射模块
+ * @brief 发射模块
  */
-module tx(clk, rst, tx_data, tx_ready, tx);
+module tx(clk, rst, tx, tx_data, tx_ready);								 
     input wire clk;
     input wire rst;
-    input wire[DATA_BIT-1:0] tx_data;
-    output wire tx_ready;
-    output reg tx;
+    input wire[BIT_MAX-1:0] tx_data; // 要发送的数据
+    output wire tx_ready; // 发送完成标志
+    output reg tx; // 输出
 
-    parameter DATA_BIT = 8; // 数据位
-    parameter STOP_BIT = 1;  // 停止位
-    parameter BPS_MAX = 9600; // 波特计数最大值
+    parameter BPS_MAX = 5208; // 波特率对应周期数
+    parameter BIT_MAX = 8; // 数据位数
 
     // 状态机参数定义
     parameter IDLE = 0; // 空闲
     parameter START = 1; // 起始位
     parameter DATA = 2; // 数据位
     parameter STOP = 3; // 停止位
-
-    reg[1:0] state; // 现态
+ 
+    reg[1:0] state;// 现态
         
-    // 状态转移条件      
-    wire idle2start;
-    wire start2data;
-    wire data2stop;
-    wire stop2idle;
-
-    reg[25:0] bps_cnt; // 波特率计数
-    wire add_bps_cnt;
+    reg[25:0] bps_cnt;
     wire end_bps_cnt;
-    reg[3:0] bit_cnt; // 数据位计数
-    wire add_bit_cnt;
-    wire end_bit_cnt;
-    reg[3:0] BIT_MAX;
-
-    reg[DATA_BIT-1:0] tx_data_r;
-
+    reg[3:0] bit_cnt;
+    wire end_bit_cnt; // 输出 1 Byte 数据完成标志
+ 
+    reg[BIT_MAX-1:0] temp_data; // 输出数据临时缓存
+ 
+    // fsm
     // 时序逻辑描述状态转移
-    always @(posedge clk or negedge rst) begin 
+    always @(posedge clk or negedge rst) begin
         if (!rst) begin
             state <= IDLE;
         end 
         else begin
             case(state)
                 IDLE: begin
-                    if (idle2start)
-                        state <= START;  
+                    bps_cnt <= 0;
+                    bit_cnt <= 0;
+                    temp_data <= 0;
+                    if (state == IDLE) begin
+                        state <= START;
+                    end
                 end
+
                 START: begin
-                    if (start2data)
-                        state <= DATA ;   
+                    if(end_bit_cnt) begin
+                        state <= STOP;
+                    end
                 end
-                DATA: begin
-                    if (data2stop)
-                        state <= STOP;   
-                end
+
                 STOP: begin
-                    if (stop2idle)
-                        state <= IDLE;
+                    state <= IDLE;
                 end
             endcase
         end
     end
               
-    assign idle2start = state == IDLE;
-    assign start2data = (state == START) && end_bit_cnt;
-    assign data2stop = (state == DATA) && end_bit_cnt;
-    assign stop2idle = (state == STOP) && end_bit_cnt;    
-
     // bps_cnt                    
     always @(posedge clk or negedge rst) begin 
         if (!rst) begin
-            bps_cnt <= 'd0;
+            bps_cnt <= 0;
         end 
-        else if (add_bps_cnt) begin 
-            if (end_bps_cnt) begin 
-                bps_cnt <= 'd0;
+        else if (state != IDLE) begin 
+            if (bps_cnt == BPS_MAX - 1) begin 
+                bps_cnt <= 0;
             end
             else begin 
                 bps_cnt <= bps_cnt + 1'b1;
-            end 
+            end
         end
-    end 
-    
-    assign add_bps_cnt = state != IDLE;
-    assign end_bps_cnt = add_bps_cnt && bps_cnt == BPS_MAX - 1;
+    end
+    assign end_bps_cnt = bps_cnt == BPS_MAX - 1;
 
     // bit_cnt
-    always @(posedge clk or negedge rst) begin 
+    always @(posedge end_bps_cnt) begin 
         if (!rst) begin
-            bit_cnt <= 'd0;
-        end 
-        else if (add_bit_cnt) begin 
-            if(end_bit_cnt) begin 
-                bit_cnt <= 'd0;
+            bit_cnt <= 0;
+        end
+        else if (state != IDLE) begin 
+            if (bit_cnt == BIT_MAX) begin 
+                bit_cnt <= 0;
             end
             else begin 
                 bit_cnt <= bit_cnt + 1'b1;
             end 
         end
     end 
-    
-    assign add_bit_cnt = end_bps_cnt;
-    assign end_bit_cnt = add_bit_cnt && bit_cnt == BIT_MAX - 1;
+    assign end_bit_cnt = bit_cnt == BIT_MAX;
 
-    // 计数器复用
-    always @(*) begin 
-        case (state)
-            START: BIT_MAX = 1;
-            DATA: BIT_MAX = DATA_BIT;
-            STOP: BIT_MAX = STOP_BIT;
-        endcase
+    // 数据输出逻辑
+    always @(posedge end_bps_cnt) begin
+        if (!rst) 
+            temp_data <= 0;
+        else if (state == START) 
+            temp_data[bit_cnt+1] <= tx;
     end
 
-    // tx时序
     always @(*) begin 
         case (state)
             IDLE: tx = 1; // 等待：高电平
             START: tx = 0; // 起始：低电平
             DATA: begin
-                if (tx_data_r[bit_cnt])
+                if (temp_data[bit_cnt])
                     tx= 1;
                 else
                     tx = 0;
@@ -128,5 +110,6 @@ module tx(clk, rst, tx_data, tx_ready, tx);
         endcase
     end
 
+    // 输出逻辑
     assign tx_ready = state == IDLE;
 endmodule

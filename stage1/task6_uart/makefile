@@ -8,12 +8,14 @@ WAVE_TARGET = wave.vcd
 BUILD_DIR = ./build
 
 # V sources:
+# make rx
 V_SOURCES = \
-./test/uart_tb.v
+./test/rx_tb.v
 
 # V includes
+# make rx
 V_INCLUDES = \
-./mod/uart.v
+./mod/rx.v
 
 # compiler
 CC = iverilog
