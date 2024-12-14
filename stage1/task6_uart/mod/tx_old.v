@@ -1,5 +1,5 @@
 /**
- * @brief 接收模块
+ * @brief 发射模块
  */
 module tx(clk, rst, tx, tx_data, tx_ready);								 
     input wire clk;
@@ -13,7 +13,7 @@ module tx(clk, rst, tx, tx_data, tx_ready);
 
     // 状态机参数定义
     parameter IDLE = 0; // 空闲
-    parameter START = 1; // 跳过起始位
+    parameter START = 1; // 起始位
     parameter DATA = 2; // 数据位
     parameter STOP = 3; // 停止位
  
@@ -22,26 +22,11 @@ module tx(clk, rst, tx, tx_data, tx_ready);
     reg[25:0] bps_cnt;
     wire end_bps_cnt;
     reg[3:0] bit_cnt;
-    reg end_bit_cnt; // 接收 1 Byte 数据完成标志
-    reg[3:0] bit_max;
+    wire end_bit_cnt; // 输出 1 Byte 数据完成标志
  
-    reg[BIT_MAX-1:0] temp_data; // 输入数据临时缓存
+    reg[BIT_MAX-1:0] temp_data; // 输出数据临时缓存
  
-    reg tx_r0; // 输入数据同步寄存
-    reg tx_r1;
-    
-    // 输入数据寄存
-    always @(posedge clk or negedge rst) begin 
-        if (!rst) begin
-            tx_r0 <= 1;
-            tx_r1 <= 1;
-        end 
-        else begin 
-           tx_r0 <= tx;
-           tx_r1 <= tx_r0;
-        end 
-    end
-
+    // fsm
     // 时序逻辑描述状态转移
     always @(posedge clk or negedge rst) begin
         if (!rst) begin
@@ -52,56 +37,24 @@ module tx(clk, rst, tx, tx_data, tx_ready);
                 IDLE: begin
                     bps_cnt <= 0;
                     bit_cnt <= 0;
-                    tx_r0 <= 1;
-                    tx_r1 <= 1;
                     temp_data <= 0;
-                    if (!tx) begin
+                    if (state == IDLE) begin
                         state <= START;
                     end
                 end
 
                 START: begin
-                    bit_max = 1;
-                    if (end_bit_cnt) begin
-                        state = DATA;
-                        bit_cnt = 4'b0000;
-                        end_bit_cnt = 0;
-                    end
-                end
-
-                DATA: begin
-                    bit_max = BIT_MAX;
-                    if (end_bit_cnt) begin
-                        bit_cnt <= 0;
+                    if(end_bit_cnt) begin
                         state <= STOP;
-                        end_bit_cnt = 0;
                     end
                 end
 
                 STOP: begin
-                    bit_max = 1;
-                    if (end_bit_cnt) begin
-                        bit_cnt <= 0;
-                        state <= IDLE;
-                        end_bit_cnt = 0;
-                    end
+                    state <= IDLE;
                 end
             endcase
         end
     end
-
-    // 数据接收逻辑
-    always @(posedge end_bps_cnt) begin
-        case(state)
-            DATA: begin
-                temp_data[bit_cnt] <= tx_r1;
-            end
-        endcase
-    end
-
-    // 输出逻辑
-    assign tx_ready = state == STOP;
-    assign tx_data = (state == STOP) ? temp_data : 0;
               
     // bps_cnt                    
     always @(posedge clk or negedge rst) begin 
@@ -113,7 +66,7 @@ module tx(clk, rst, tx, tx_data, tx_ready);
                 bps_cnt <= 0;
             end
             else begin 
-                bps_cnt <= bps_cnt + 1;
+                bps_cnt <= bps_cnt + 1'b1;
             end
         end
     end
@@ -125,13 +78,38 @@ module tx(clk, rst, tx, tx_data, tx_ready);
             bit_cnt <= 0;
         end
         else if (state != IDLE) begin 
-            if (bit_cnt == bit_max - 1) begin 
+            if (bit_cnt == BIT_MAX) begin 
                 bit_cnt <= 0;
-                end_bit_cnt <= 1;
             end
             else begin 
-                bit_cnt <= bit_cnt + 1;
-            end
+                bit_cnt <= bit_cnt + 1'b1;
+            end 
         end
     end 
+    assign end_bit_cnt = bit_cnt == BIT_MAX;
+
+    // 数据输出逻辑
+    always @(posedge end_bps_cnt) begin
+        if (!rst) 
+            temp_data <= 0;
+        else if (state == START) 
+            temp_data[bit_cnt+1] <= tx;
+    end
+
+    always @(*) begin 
+        case (state)
+            IDLE: tx = 1; // 等待：高电平
+            START: tx = 0; // 起始：低电平
+            DATA: begin
+                if (temp_data[bit_cnt])
+                    tx= 1;
+                else
+                    tx = 0;
+            end
+            STOP: tx = 1; // 停止：高电平
+        endcase
+    end
+
+    // 输出逻辑
+    assign tx_ready = state == IDLE;
 endmodule

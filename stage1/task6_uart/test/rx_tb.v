@@ -41,16 +41,16 @@ module rx_tb;
         #100;
 
         // Send a byte (0xA5) over rx line
-        send_byte(8'hA5);
+        send_byte(8'hA5); // 10100101
 
         // Wait for reception to complete
-        #140000;
+        #100000;
 
         // Send another byte (0x5A) over rx line
         send_byte(8'h5A);
 
         // Wait for reception to complete
-        #140000;
+        #100000;
 
         // End simulation
         $stop;
