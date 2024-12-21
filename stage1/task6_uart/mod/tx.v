@@ -38,7 +38,6 @@ module tx(clk, rst, tx, tx_data, tx_ready);
             case(state)
                 IDLE: begin
                     bps_cnt <= 0;
-                    bit_cnt <= 0;
                     temp_data <= 0;
                     if (flag_n) begin
                         state <= START;
@@ -56,7 +55,6 @@ module tx(clk, rst, tx, tx_data, tx_ready);
                 DATA: begin
                     bit_max = BIT_MAX;
                     if (end_bit_cnt) begin
-                        bit_cnt <= 0;
                         state <= STOP;
                     end
                 end
@@ -64,7 +62,6 @@ module tx(clk, rst, tx, tx_data, tx_ready);
                 STOP: begin
                     bit_max = 1;
                     if (end_bit_cnt) begin
-                        bit_cnt <= 0;
                         state <= IDLE;
                     end
                 end

@@ -28,8 +28,8 @@ module devision_seq(clk, rst, start, done, a, b, y, remainder);
         done = 1'b0;
     end
 
-    always@(posedge clk or posedge rst) begin
-        if (rst) begin
+    always @(posedge clk or negedge rst) begin
+        if (!rst) begin
             state <= 0;
             done <= 0;
             y <= 0;

@@ -1,7 +1,7 @@
 /**
  * @brief 接收模块
  */
-module rx(clk, rst, rx, rx_data, rx_ready);
+module rx(clk, rst, rx, rx_data, rx_ready);		
     input wire clk;
     input wire rst;
     input wire rx; // 输入
@@ -20,7 +20,7 @@ module rx(clk, rst, rx, rx_data, rx_ready);
     reg[1:0] state;// 现态
         
     reg[25:0] bps_cnt;
-    wire end_bps_cnt;
+    reg end_bps_cnt;
     reg[3:0] bit_cnt;
     reg end_bit_cnt; // 接收 1 Byte 数据完成标志
     reg[3:0] bit_max;
@@ -46,15 +46,33 @@ module rx(clk, rst, rx, rx_data, rx_ready);
     always @(posedge clk or negedge rst) begin
         if (!rst) begin
             state <= IDLE;
+            bps_cnt <= 0;
+            bit_cnt <= 0;
+            rx_r0 <= 1;
+            rx_r1 <= 1;
+            temp_data <= 0;
+            end_bit_cnt <= 0;
+            end_bps_cnt <= 0;
         end 
         else begin
+            // bps_cnt 逻辑
+            if (state != IDLE) begin 
+                if (bps_cnt == BPS_MAX - 1) begin 
+                    bps_cnt <= 0;
+                    end_bps_cnt <= 1;
+                end
+                else begin 
+                    bps_cnt <= bps_cnt + 1;
+                    end_bps_cnt <= 0;
+                end
+            end
+            else begin
+                end_bps_cnt <= 0;
+            end
+
+            // 状态机逻辑
             case(state)
                 IDLE: begin
-                    bps_cnt <= 0;
-                    bit_cnt <= 0;
-                    rx_r0 <= 1;
-                    rx_r1 <= 1;
-                    temp_data <= 0;
                     if (!rx) begin
                         state <= START;
                     end
@@ -65,6 +83,7 @@ module rx(clk, rst, rx, rx_data, rx_ready);
                     if (end_bit_cnt) begin
                         state <= DATA;
                         bit_cnt <= 0;
+                        end_bit_cnt <= 0;
                     end
                 end
 
@@ -73,6 +92,7 @@ module rx(clk, rst, rx, rx_data, rx_ready);
                     if (end_bit_cnt) begin
                         bit_cnt <= 0;
                         state <= STOP;
+                        end_bit_cnt <= 0;
                     end
                 end
 
@@ -81,60 +101,36 @@ module rx(clk, rst, rx, rx_data, rx_ready);
                     if (end_bit_cnt) begin
                         bit_cnt <= 0;
                         state <= IDLE;
+                        end_bit_cnt <= 0;
                     end
                 end
             endcase
-        end
-    end
 
-    // 数据接收逻辑
-    always @(posedge end_bps_cnt) begin
-        case(state)
-            DATA: begin
+            // bit_cnt 逻辑
+            if (end_bps_cnt) begin
+                if (state != IDLE) begin 
+                    if (bit_cnt == bit_max - 1) begin 
+                        bit_cnt <= 0;
+                        end_bit_cnt <= 1;
+                    end
+                    else begin 
+                        bit_cnt <= bit_cnt + 1;
+                        end_bit_cnt <= 0;
+                    end
+                end
+                else begin
+                    end_bit_cnt <= 0;
+                end
+            end
+
+            // 数据接收逻辑
+            if (end_bps_cnt && state == DATA) begin
                 temp_data[bit_cnt] <= rx_r1;
             end
-        endcase
+        end
     end
 
     // 输出逻辑
     assign rx_ready = state == STOP;
     assign rx_data = (state == STOP) ? temp_data : 0;
-
-    // bps_cnt                    
-    always @(posedge clk or negedge rst) begin 
-        if (!rst) begin
-            bps_cnt <= 0;
-        end 
-        else if (state != IDLE) begin 
-            if (bps_cnt == BPS_MAX - 1) begin 
-                bps_cnt <= 0;
-            end
-            else begin 
-                bps_cnt = bps_cnt + 1;
-            end
-        end
-    end
-    assign end_bps_cnt = bps_cnt == BPS_MAX - 1;
-
-    // bit_cnt
-    always @(posedge end_bps_cnt) begin 
-        if (!rst) begin
-            bit_cnt <= 0;
-            end_bit_cnt <= 0;
-        end
-        else if (state != IDLE) begin 
-            if (bit_cnt == bit_max - 1) begin 
-                bit_cnt <= 0;
-                end_bit_cnt <= 1;
-            end
-            else begin 
-                bit_cnt <= bit_cnt + 1;
-                end_bit_cnt <= 0;
-            end
-        end
-        else begin
-            bit_cnt <= 0;
-            end_bit_cnt <= 0;
-        end
-    end 
 endmodule
