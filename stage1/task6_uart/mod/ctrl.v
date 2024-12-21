@@ -4,9 +4,9 @@
 module ctrl(clk, rst, rx_ready, rx_data, tx_data);
     input wire clk;
     input wire rst;
-    input wire rx_ready;
-    input wire[BIT_MAX-1:0] rx_data;
-    output reg[BIT_MAX-1:0] tx_data;
+    input wire rx_ready; // 可以接收标志
+    input wire[BIT_MAX-1:0] rx_data; // 接收到的数据
+    output reg[BIT_MAX-1:0] tx_data; // 要发送的数据
 
     parameter BIT_MAX = 8; // 数据位数
 
@@ -25,4 +25,6 @@ module ctrl(clk, rst, rx_ready, rx_data, tx_data);
             end
         end
     end
+
+    // 计算
 endmodule

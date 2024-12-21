@@ -1,5 +1,5 @@
 /**
- * @brief 接收模块
+ * @brief 发送模块
  */
 module tx(clk, rst, tx, tx_data, tx_ready);								 
     input wire clk;
