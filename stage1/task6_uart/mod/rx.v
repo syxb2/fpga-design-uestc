@@ -1,7 +1,7 @@
 /**
  * @brief 接收模块
  */
-module rx(clk, rst, rx, rx_data, rx_ready);								 
+module rx(clk, rst, rx, rx_data, rx_ready);
     input wire clk;
     input wire rst;
     input wire rx; // 输入
@@ -61,29 +61,26 @@ module rx(clk, rst, rx, rx_data, rx_ready);
                 end
 
                 START: begin
-                    bit_max = 1;
+                    bit_max <= 1;
                     if (end_bit_cnt) begin
-                        state = DATA;
-                        bit_cnt = 0;
-                        end_bit_cnt = 0;
+                        state <= DATA;
+                        bit_cnt <= 0;
                     end
                 end
 
                 DATA: begin
-                    bit_max = BIT_MAX;
+                    bit_max <= BIT_MAX;
                     if (end_bit_cnt) begin
                         bit_cnt <= 0;
                         state <= STOP;
-                        end_bit_cnt = 0;
                     end
                 end
 
                 STOP: begin
-                    bit_max = 1;
+                    bit_max <= 1;
                     if (end_bit_cnt) begin
                         bit_cnt <= 0;
                         state <= IDLE;
-                        end_bit_cnt = 0;
                     end
                 end
             endcase
@@ -102,7 +99,7 @@ module rx(clk, rst, rx, rx_data, rx_ready);
     // 输出逻辑
     assign rx_ready = state == STOP;
     assign rx_data = (state == STOP) ? temp_data : 0;
-              
+
     // bps_cnt                    
     always @(posedge clk or negedge rst) begin 
         if (!rst) begin
@@ -113,7 +110,7 @@ module rx(clk, rst, rx, rx_data, rx_ready);
                 bps_cnt <= 0;
             end
             else begin 
-                bps_cnt <= bps_cnt + 1;
+                bps_cnt = bps_cnt + 1;
             end
         end
     end
@@ -123,6 +120,7 @@ module rx(clk, rst, rx, rx_data, rx_ready);
     always @(posedge end_bps_cnt) begin 
         if (!rst) begin
             bit_cnt <= 0;
+            end_bit_cnt <= 0;
         end
         else if (state != IDLE) begin 
             if (bit_cnt == bit_max - 1) begin 
@@ -131,7 +129,12 @@ module rx(clk, rst, rx, rx_data, rx_ready);
             end
             else begin 
                 bit_cnt <= bit_cnt + 1;
+                end_bit_cnt <= 0;
             end
+        end
+        else begin
+            bit_cnt <= 0;
+            end_bit_cnt <= 0;
         end
     end 
 endmodule

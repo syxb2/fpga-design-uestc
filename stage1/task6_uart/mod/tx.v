@@ -1,11 +1,11 @@
 /**
  * @brief 发送模块
  */
-module tx(clk, rst, tx, tx_data, tx_ready);								 
+module tx(clk, rst, tx, tx_data, tx_ready);
     input wire clk;
     input wire rst;
     input wire[BIT_MAX-1:0] tx_data; // 要发送的数据
-    output wire tx_ready; // 可以发送标志
+    input wire tx_ready; // 可以发送标志
     output reg tx; // 输出
 
     parameter BPS_MAX = 5208; // 波特率对应周期数
@@ -49,9 +49,7 @@ module tx(clk, rst, tx, tx_data, tx_ready);
                     bit_max = 1;
                     temp_data <= tx_data;
                     if (end_bit_cnt) begin
-                        state = DATA;
-                        bit_cnt = 0;
-                        end_bit_cnt = 0;
+                        state <= DATA;
                     end
                 end
 
@@ -60,7 +58,6 @@ module tx(clk, rst, tx, tx_data, tx_ready);
                     if (end_bit_cnt) begin
                         bit_cnt <= 0;
                         state <= STOP;
-                        end_bit_cnt = 0;
                     end
                 end
 
@@ -69,7 +66,6 @@ module tx(clk, rst, tx, tx_data, tx_ready);
                     if (end_bit_cnt) begin
                         bit_cnt <= 0;
                         state <= IDLE;
-                        end_bit_cnt = 0;
                     end
                 end
             endcase
@@ -113,18 +109,29 @@ module tx(clk, rst, tx, tx_data, tx_ready);
     assign end_bps_cnt = bps_cnt == BPS_MAX - 1;
 
     // bit_cnt
-    always @(posedge end_bps_cnt) begin 
+    always @(posedge clk or negedge rst) begin
         if (!rst) begin
             bit_cnt <= 0;
+            end_bit_cnt <= 0;
         end
-        else if (state != IDLE) begin 
-            if (bit_cnt == bit_max - 1) begin 
-                bit_cnt <= 0;
-                end_bit_cnt <= 1;
+        else if (state != IDLE) begin
+            if (end_bps_cnt) begin
+                if (bit_cnt == bit_max - 1) begin
+                    bit_cnt <= 0;
+                    end_bit_cnt <= 1;
+                end
+                else begin
+                    bit_cnt <= bit_cnt + 1;
+                    end_bit_cnt <= 0;
+                end
             end
-            else begin 
-                bit_cnt <= bit_cnt + 1;
+            else begin
+                end_bit_cnt <= 0;
             end
         end
-    end 
+        else begin
+            bit_cnt <= 0;
+            end_bit_cnt <= 0;
+        end
+    end
 endmodule
