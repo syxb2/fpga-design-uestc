@@ -12,16 +12,22 @@ BUILD_DIR = ./build
 # V_SOURCES = \
 ./test/rx_tb.v
 # make tx
-V_SOURCES = \
+# V_SOURCES = \
 ./test/tx_tb.v
+# make devision
+V_SOURCES = \
+./test/devision_tb.v
 
 # V includes
 # make rx
 # V_INCLUDES = \
 ./mod/rx.v
 # make tx
-V_INCLUDES = \
+# V_INCLUDES = \
 ./mod/tx.v
+# make devision
+V_INCLUDES = \
+./mod/devision.v
 
 # compiler
 CC = iverilog
