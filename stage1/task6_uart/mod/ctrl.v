@@ -13,8 +13,8 @@ module ctrl(clk, rst, rx_ready, rx_data, tx_data);
     reg done; // 发送数据准备完成标志
     reg rx_counter;
     reg tx_counter;
-    reg[BIT_MAX-1:0] Ra; // 寄存器A: 用于存储被除数; 16bits
-    reg[BIT_MAX-1:0] Rb; // 寄存器B: 用于存储除数; 16bits
+    reg[BIT_MAX-1:0] Ra; // 寄存器A: 用于存储被除数 16bits
+    reg[BIT_MAX-1:0] Rb; // 寄存器B: 用于存储除数 16bits
     reg[BIT_MAX-1:0] Rx; // 寄存器X: 用于存储商; 16bits
 
     // 接收数据

@@ -9,3 +9,5 @@
 > 参考：https://blog.csdn.net/2301_76461741/article/details/133042197
 
 ### 2、alway@(...) 这里一定是 clk，不能使用自己定义的 wire 变量。
+
+否则会出现严重的时序问题
