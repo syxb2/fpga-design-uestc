@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
-`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task6_uart/mod/rx.v"
-`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task6_uart/mod/tx.v"
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task6_uart/mod/rx_uart.v"
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task6_uart/mod/tx_uart.v"
 
 module rxtx_tb;
     reg clk;
@@ -12,7 +12,7 @@ module rxtx_tb;
     wire rx_ready;
 
     // Instantiate the tx module
-    tx tx_inst (
+    tx_uart tx_inst (
         .clk(clk),
         .rst(rst),
         .tx_data(tx_data),
@@ -21,7 +21,7 @@ module rxtx_tb;
     );
 
     // Instantiate the rx module
-    rx rx_inst (
+    rx_uart rx_inst (
         .clk(clk),
         .rst(rst),
         .rx(tx),

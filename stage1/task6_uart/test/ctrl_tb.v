@@ -1,5 +1,5 @@
 `timescale 1ns/1ns
-`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task6_uart/mod/ctrl.v"
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task6_uart/mod/ctrl_uart.v"
 
 module ctrl_tb();
     // 定义信号
@@ -11,7 +11,7 @@ module ctrl_tb();
     wire [7:0] tx_data;
 
     // 实例化被测试模块
-    ctrl u_ctrl(
+    ctrl_uart u_ctrl(
         .clk(clk),
         .rst(rst),
         .rx_ready(rx_ready),

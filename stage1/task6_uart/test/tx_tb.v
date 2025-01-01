@@ -1,5 +1,5 @@
 `timescale 1ns/1ns
-`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task6_uart/mod/tx.v"
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task6_uart/mod/tx_uart.v"
 
 module tx_tb;
     reg clk;
@@ -9,7 +9,7 @@ module tx_tb;
     wire tx;
 
     // Instantiate the tx module
-    tx uut (
+    tx_uart uut (
         .clk(clk),
         .rst(rst),
         .tx_data(tx_data),

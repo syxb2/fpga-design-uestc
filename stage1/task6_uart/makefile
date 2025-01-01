@@ -18,23 +18,32 @@ BUILD_DIR = ./build
 # V_SOURCES = \
 ./test/rxtx_tb.v
 # make ctrl
-V_SOURCES = \
+# V_SOURCES = \
 ./test/ctrl_tb.v
+# make top
+V_SOURCES = \
+./test/top_tb.v
 
 # V includes
 # make rx
 # V_INCLUDES = \
-./mod/rx.v
+./mod/rx_uart.v
 # make tx
 # V_INCLUDES = \
-./mod/tx.v
+./mod/tx_uart.v
 # make rx & tx
 # V_INCLUDES = \
-./mod/rx.v \
-./mod/tx.v
+./mod/rx_uart.v \
+./mod/tx_uart.v
 # make ctrl
+# V_INCLUDES = \
+./mod/ctrl_uart.v
+# make top
 V_INCLUDES = \
-./mod/ctrl.v
+./mod/rx_uart.v \
+./mod/tx_uart.v \
+./mod/ctrl_uart.v
+
 
 # compiler
 CC = iverilog
