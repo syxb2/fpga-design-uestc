@@ -1,7 +1,7 @@
 /**
  * @brief 接收模块
  */
-module rx(clk, rst, rx, rx_data, rx_ready);		
+module rx_uart(clk, rst, rx, rx_data, rx_ready);		
     input wire clk;
     input wire rst;
     input wire rx; // 输入

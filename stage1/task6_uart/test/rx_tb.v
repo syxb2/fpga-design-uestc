@@ -1,5 +1,5 @@
 `timescale 1ns/1ns
-`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task6_uart/mod/rx.v"
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task6_uart/mod/rx_uart.v"
 
 module rx_tb;
     reg clk;
@@ -9,7 +9,7 @@ module rx_tb;
     wire rx_ready;
 
     // Instantiate the rx_uart module
-    rx uut (
+    rx_uart uut (
         .clk(clk),
         .rst(rst),
         .rx(rx),

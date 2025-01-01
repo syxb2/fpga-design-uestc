@@ -24,17 +24,17 @@ V_SOURCES = \
 # V includes
 # make rx
 # V_INCLUDES = \
-./mod/rx.v
+./mod/rx_uart.v
 # make tx
 # V_INCLUDES = \
-./mod/tx.v
+./mod/tx_uart.v
 # make rx & tx
 # V_INCLUDES = \
-./mod/rx.v \
-./mod/tx.v
+./mod/rx_uart.v \
+./mod/tx_uart.v
 # make ctrl
 V_INCLUDES = \
-./mod/ctrl.v
+./mod/ctrl_uart.v
 
 # compiler
 CC = iverilog

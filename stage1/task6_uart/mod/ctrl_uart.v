@@ -1,7 +1,7 @@
 /**
  * @brief 控制模块
  */
-module ctrl(clk, rst, rx_ready, rx_data, tx_ready, tx_data);
+module ctrl_uart(clk, rst, rx_ready, rx_data, tx_ready, tx_data);
     parameter BPS_MAX = 41664; // 波特率对应周期数 5208 * 8
     parameter BIT_MAX = 16; // 数据位数
 

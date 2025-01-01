@@ -1,7 +1,7 @@
 /**
  * @brief 发送模块
  */
-module tx(clk, rst, tx, tx_data, tx_ready);
+module tx_uart(clk, rst, tx, tx_data, tx_ready);
     parameter BPS_MAX = 5208; // 波特率对应周期数
     parameter BIT_MAX = 8; // 数据位数
 
