@@ -5,7 +5,7 @@ module tx_tb;
     reg clk;
     reg rst;
     reg [7:0] tx_data;
-    wire tx_ready;
+    reg tx_ready;
     wire tx;
 
     // Instantiate the tx module
@@ -30,6 +30,7 @@ module tx_tb;
         // Initialize signals
         rst = 0;
         tx_data = 8'h00;
+        tx_ready = 0;
         #100;
         
         // Reset the design
@@ -40,14 +41,20 @@ module tx_tb;
         rst = 1;
         #100;
 
-        #300000;
+      #300000;
         // Send a byte (0xA5) over tx line
         tx_data = 8'hA5;
-        #1200000;
+        tx_ready = 1;
+        #40
+        tx_ready = 0;
+        #1500000;
 
         // Send another byte (0x5A) over tx line
         tx_data = 8'h5A;
-        #1200000;
+        tx_ready = 1;
+        #40
+        tx_ready = 0;
+        #1500000;
 
         // End simulation
         $stop;

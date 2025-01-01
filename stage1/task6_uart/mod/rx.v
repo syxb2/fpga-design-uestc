@@ -2,14 +2,14 @@
  * @brief 接收模块
  */
 module rx(clk, rst, rx, rx_data, rx_ready);		
+    parameter BPS_MAX = 5208; // 波特率对应周期数
+    parameter BIT_MAX = 8; // 数据位数
+
     input wire clk;
     input wire rst;
     input wire rx; // 输入
     output wire[BIT_MAX-1:0] rx_data;
     output wire rx_ready;
-
-    parameter BPS_MAX = 5208; // 波特率对应周期数
-    parameter BIT_MAX = 8; // 数据位数
 
     // 状态机参数定义
     parameter IDLE = 0; // 空闲

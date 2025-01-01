@@ -18,8 +18,8 @@ def receive_data(ser):
 def main():
     # 配置串口
     ser = serial.Serial(
-        port='/dev/ttyUSB0',  # 根据实际情况修改串口端口
-        baudrate=9600, # 设置波特率
+        port='/dev/tty.usbserial',  # 根据实际情况修改串口端口
+        baudrate=9600,  # 设置波特率
         timeout=1
     )
 

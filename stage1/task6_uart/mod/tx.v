@@ -2,14 +2,16 @@
  * @brief 发送模块
  */
 module tx(clk, rst, tx, tx_data, tx_ready);
+    parameter BPS_MAX = 5208; // 波特率对应周期数
+    parameter BIT_MAX = 8; // 数据位数
+
     input wire clk;
     input wire rst;
     input wire[BIT_MAX-1:0] tx_data; // 要发送的数据
     input wire tx_ready; // 可以发送标志
     output reg tx; // 输出
 
-    parameter BPS_MAX = 5208; // 波特率对应周期数
-    parameter BIT_MAX = 8; // 数据位数
+
 
     // 状态机参数定义
     parameter IDLE = 0; // 空闲
@@ -27,7 +29,7 @@ module tx(clk, rst, tx, tx_data, tx_ready);
     reg[BIT_MAX-1:0] temp_data; // 输入数据临时缓存
     wire flag_n; // 标志位
 
-    assign flag_n = tx_data[0] || tx_data[1] || tx_data[2] || tx_data[3] || tx_data[4] || tx_data[5] || tx_data[6] || tx_data[7];
+    assign flag_n = (tx_data[0] || tx_data[1] || tx_data[2] || tx_data[3] || tx_data[4] || tx_data[5] || tx_data[6] || tx_data[7]) && tx_ready;
  
     // 时序逻辑描述状态转移
     always @(posedge clk or negedge rst) begin
@@ -86,9 +88,6 @@ module tx(clk, rst, tx, tx_data, tx_ready);
         endcase
     end
 
-    // 输出逻辑
-    assign tx_ready = state == IDLE;
-              
     // bps_cnt                    
     always @(posedge clk or negedge rst) begin 
         if (!rst) begin
@@ -103,6 +102,7 @@ module tx(clk, rst, tx, tx_data, tx_ready);
             end
         end
     end
+
     assign end_bps_cnt = bps_cnt == BPS_MAX - 1;
 
     // bit_cnt
