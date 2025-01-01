@@ -10,7 +10,7 @@ BUILD_DIR = ./build
 # V sources:
 # Version 1
 V_SOURCES = \
-./test/devision_seq_tb.v \
+./test/devision_seq_led_tb.v \
 # Version 2
 # V_SOURCES = \
 # ./test/devision_seq_board_tb.v \

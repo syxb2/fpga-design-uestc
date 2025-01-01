@@ -1,94 +1,93 @@
-/**
- * Copyright © 2024 Bai Jiale 578767478@qq.com
- * License: MIT
- */
 `timescale 1ns/1ns
-`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task3_devision_16bits_int_seq/mod/devision_seq.v"
-`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task3_devision_16bits_int_seq/mod/led_encoder.v"
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task6_uart/mod/devision.v"
 
-module devision_seq_tb();
+module devision_tb;
     reg clk;
     reg rst;
     reg start;
+    reg [15:0] a;
+    reg [15:0] b;
     wire done;
-    reg[15:0] a;
-    reg[15:0] b;
-    wire[15:0] y;
-    wire[15:0] remainder;
-    wire[6:0] out1;
-    wire[6:0] out2;
-    wire[6:0] out3;
-    wire[6:0] out4;
+    wire [15:0] y;
+    wire [15:0] remainder;
 
-    devision_seq uut(
-        .clk        (clk),
-        .rst        (rst),
-        .start      (start),
-        .done       (done),
-        .a          (a),
-        .b          (b),
-        .y          (y),
-        .remainder  (remainder)
+    // Instantiate the devision_seq module
+    devision_seq uut (
+        .clk(clk),
+        .rst(rst),
+        .start(start),
+        .done(done),
+        .a(a),
+        .b(b),
+        .y(y),
+        .remainder(remainder)
     );
 
-    led_encoder uut_led(
-        .in         (y),
-        .out1       (out1),
-        .out2       (out2),
-        .out3       (out3),
-        .out4       (out4)
-    );
-
+    // Clock generation
     initial begin
         $dumpfile("wave.vcd");
-        $dumpvars(0, devision_seq_tb);
-
+        $dumpvars(0, devision_tb);
         clk = 0;
+        forever #10 clk = ~clk; // 50 MHz clock
+    end
+
+    // Test sequence
+    initial begin
+        // Initialize signals
         rst = 0;
         start = 0;
-
-        a = 16'h0000;
-        b = 16'h0000;
-    end
-
-    always begin
-        #5 clk = ~clk; //* T = 10ns
-    end
-
-    initial begin
-        // Test case 1 ---------------------------
-        rst = 1; #10; rst = 0;
-
-        a = 16'd110;
-        b = 16'd25;
-
-        start = 1; #10 start = 0;
-
-        wait(done); //! 等待 done 信号变为 1 后再继续执行下面的语句
-        #50
-
-        // Test case 2 ----------------------------
-        rst = 1; #10 rst = 0;
-
-        a = 16'd32200;
-        b = 16'd37;
-
-        start = 1; #10 start = 0;
+        a = 0;
+        b = 0;
+        #100;
         
-        wait(done); 
-        #50;
+        // Reset the design
+        rst = 1;
+        #100;
+        rst = 0;
+        #100;
+        rst = 1;
+        #100;
 
-        // Test case 3 -----------------------------
-        rst = 1; #10 rst = 0;
+        // Test case 1: 100 / 3
+        a = 16'd100;
+        b = 16'd3;
+        start = 1;
+        #20;
+        start = 0;
+        wait(done);
+        #100;
 
+        rst = 1;
+        #100;
+        rst = 0;
+        #100;
+        rst = 1;
+        #100;
+        // Test case 2: 255 / 5
+        a = 16'd255;
+        b = 16'd5;
+        start = 1;
+        #20;
+        start = 0;
+        wait(done);
+        #100;
+
+        rst = 1;
+        #100;
+        rst = 0;
+        #100;
+        rst = 1;
+        #100;
+        // Test case 3: 1234 / 56
         a = 16'd1234;
         b = 16'd56;
+        start = 1;
+        #20;
+        start = 0;
+        wait(done);
+        #100;
 
-        start = 1; #10 start = 0;
-
-        wait(done); 
-        #50;
-
+        // End simulation
         $finish;
     end
 endmodule
