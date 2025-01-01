@@ -151,6 +151,7 @@ module ctrl_uart(clk, rst, rx_ready, rx_data, tx_ready, tx_data);
             tx_data <= 0;
             tx_counter <= 0;
             tx_ready <= 0;
+            tx_done <= 0;
             cnt <= 0;
         end
         else if (d_done && !tx_done) begin
@@ -186,6 +187,9 @@ module ctrl_uart(clk, rst, rx_ready, rx_data, tx_ready, tx_data);
                     end
                 endcase
             end
+        end
+        else if (tx_done) begin
+            tx_ready <= 0;
         end
     end
 endmodule
