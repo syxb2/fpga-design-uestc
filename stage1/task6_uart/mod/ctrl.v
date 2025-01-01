@@ -157,13 +157,13 @@ module ctrl(clk, rst, rx_ready, rx_data, tx_ready, tx_data);
             // 8 bits 计数
             if (cnt == BPS_MAX - 1) begin
                 cnt <= 0;
-                end_cnt <= 1;
-                tx_ready <= 1;
+                end_cnt = 1;
+                tx_ready = 1;
             end
             else begin
                 cnt <= cnt + 1;
-                end_cnt <= 0;
-                tx_ready <= 0;
+                end_cnt = 0;
+                tx_ready = 0;
             end
 
             if (end_cnt) begin
