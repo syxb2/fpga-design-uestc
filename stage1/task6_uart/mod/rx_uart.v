@@ -18,6 +18,7 @@ module rx_uart(clk, rst, rx, rx_data, rx_ready);
     parameter STOP = 3; // 停止位
  
     reg[1:0] state;// 现态
+    reg state_flag;
         
     reg[25:0] bps_cnt;
     reg end_bps_cnt;
@@ -32,6 +33,7 @@ module rx_uart(clk, rst, rx, rx_data, rx_ready);
 
     initial begin
         state <= IDLE;
+        state_flag <= 0;
         bps_cnt <= 0;
         bit_cnt <= 0;
         temp_data <= 0;
@@ -55,6 +57,7 @@ module rx_uart(clk, rst, rx, rx_data, rx_ready);
     always @(posedge clk or negedge rst) begin
         if (!rst) begin
             state <= IDLE;
+            state_flag <= 0;
             bps_cnt <= 0;
             bit_cnt <= 0;
             temp_data <= 0;
@@ -105,6 +108,7 @@ module rx_uart(clk, rst, rx, rx_data, rx_ready);
 
                 STOP: begin
                     bit_max <= 1;
+                    state_flag <= 1;
                     if (end_bit_cnt) begin
                         bit_cnt <= 0;
                         state <= IDLE;
@@ -138,6 +142,6 @@ module rx_uart(clk, rst, rx, rx_data, rx_ready);
     end
 
     // 输出逻辑
-    assign rx_ready = state == IDLE;
-    assign rx_data = (state == IDLE) ? temp_data : 0;
+    assign rx_ready = (state == IDLE) && state_flag;
+    assign rx_data = ((state == IDLE) && state_flag == 1) ? temp_data : 0;
 endmodule

@@ -20,7 +20,6 @@ def main():
     ser = serial.Serial(
         port='/dev/tty.usbserial-110',  # 根据实际情况修改串口端口
         baudrate=9600,  # 设置波特率
-        timeout=1,
         stopbits=serial.STOPBITS_ONE,  # 设置停止位
         parity=serial.PARITY_NONE  # 无校验位
     )
@@ -33,18 +32,17 @@ def main():
 
     try:
         # 发送数据
-        send_data(ser, 0x73)  # 发送0x55作为示例数据
-        time.sleep(1)  # 等待1秒
-        send_data(ser, 0x00)  # 发送0x55作为示例数据
-        time.sleep(1)  # 等待1秒
-        send_data(ser, 0x01)  # 发送0x55作为示例数据
-        time.sleep(1)  # 等待1秒
-        send_data(ser, 0x00)  # 发送0x55作为示例数据
+        send_data(ser, 0x74)
+        time.sleep(0.01)  # 等待0.01秒
+        send_data(ser, 0x03)
+        time.sleep(0.01)  # 等待0.01秒
+        send_data(ser, 0x74)
+        time.sleep(0.01)  # 等待0.01秒
+        send_data(ser, 0x00)
         time.sleep(1)  # 等待1秒
 
         # 接收数据
         receive_data(ser)
-        time.sleep(1)  # 等待1秒
 
     except KeyboardInterrupt:
         print("Program interrupted by user.")

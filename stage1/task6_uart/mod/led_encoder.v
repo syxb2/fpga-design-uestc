@@ -17,24 +17,24 @@ module led_encoder(clk, rst, in, out, dig);
     output reg[5:0] dig; // 6 bits digits select
 
     reg[2:0] bits_select;
-    reg[15:0] counter;
+    reg[15:0] cnt;
 
     initial begin
         bits_select = 0;
-        counter = 0;
+        cnt = 0;
     end
 
     always @(posedge clk or posedge rst) begin
         if (!rst) begin
             bits_select <= 0;
-            counter <= 0;
+            cnt <= 0;
         end
         else begin
-            if (counter < 50000) begin // 50000 个时钟周期 (1 ms) 后 bits_select + 1
-                counter = counter + 1;
+            if (cnt < 50000) begin // 50000 个时钟周期 (1 ms) 后 bits_select + 1
+                cnt = cnt + 1;
             end
             else begin
-                counter <= 0;
+                cnt <= 0;
                 if (bits_select == 5) begin
                     bits_select <= 0;
                 end
