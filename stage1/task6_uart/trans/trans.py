@@ -13,7 +13,8 @@ def receive_data(ser):
         received = int.from_bytes(data, byteorder='big')
         print(f"Received: {received}")
         return received
-    return None
+    else:
+        return None
 
 def main():
     # 配置串口
@@ -32,16 +33,25 @@ def main():
 
     try:
         # 发送数据
-        send_data(ser, 0x74)
+        data1 = int(input("请输入被除数的前两位（例如 74，十六进制）： "), 16)
+        data2 = int(input("请输入被除数后两位："), 16)
+        data3 = int(input("请输入除数前两位："), 16)
+        data4 = int(input("请输入除数后两位："), 16)
+        send_data(ser, data1)
         time.sleep(0.01)  # 等待0.01秒
-        send_data(ser, 0x03)
+        send_data(ser, data2)
         time.sleep(0.01)  # 等待0.01秒
-        send_data(ser, 0x74)
+        send_data(ser, data3)
         time.sleep(0.01)  # 等待0.01秒
-        send_data(ser, 0x00)
-        time.sleep(1)  # 等待1秒
+        send_data(ser, data4)
+
+        # 等待2秒
+        time.sleep(2)
 
         # 接收数据
+        receive_data(ser)
+        receive_data(ser)
+        receive_data(ser)
         receive_data(ser)
 
     except KeyboardInterrupt:

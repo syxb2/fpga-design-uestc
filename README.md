@@ -14,6 +14,10 @@
 * MacOS Sequoia(15.1)
 * VSCode
 
+FPGA：
+
+* xc7a100tfgg484-2
+
 ### License
 
 MIT

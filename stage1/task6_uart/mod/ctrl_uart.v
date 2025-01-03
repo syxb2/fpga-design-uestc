@@ -2,8 +2,8 @@
  * @brief 控制模块
  */
 module ctrl_uart(clk, rst, rx_ready, rx_data, tx_ready, tx_data, y_to_led);
-    // parameter BPS_MAX = 41664; // 波特率对应周期数 5208 * 8
-    parameter BPS_MAX = 70000; // 波特率对应周期数 5208 * 8
+    // parameter TX_CNT = 41664; // 波特率对应周期数 5208 * 8
+    parameter TX_CNT = 166576;
     parameter BIT_MAX = 16; // 数据位数
 
     input wire clk;
@@ -48,7 +48,7 @@ module ctrl_uart(clk, rst, rx_ready, rx_data, tx_ready, tx_data, y_to_led);
     // 接收数据计数
     always @(negedge rx_ready or negedge rst) begin
         if (!rst) begin
-            rx_cnt <= -0;
+            rx_cnt <= 0;
         end
         else begin
             if (rx_cnt == 3) begin
@@ -68,9 +68,6 @@ module ctrl_uart(clk, rst, rx_ready, rx_data, tx_ready, tx_data, y_to_led);
         else begin
             if (rx_ready) begin
                 case(rx_cnt)
-                    // -1: begin
-                        // rx_done <= 0;
-                    // end
                     0: begin
                         a[7:0] <= rx_data; // 先接收高8位
                     end
@@ -167,8 +164,7 @@ module ctrl_uart(clk, rst, rx_ready, rx_data, tx_ready, tx_data, y_to_led);
             tx_cnt <= 0;
         end
         else if (d_done && !tx_done) begin
-            // 8 bits 计数
-            if (tx_cnt == BPS_MAX - 1) begin
+            if (tx_cnt == TX_CNT - 1) begin
                 tx_cnt <= 0;
                 end_cnt = 1;
                 tx_ready = 1;

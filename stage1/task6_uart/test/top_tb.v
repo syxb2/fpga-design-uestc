@@ -71,30 +71,21 @@ module top_tb();
         #20 rst = 1;
         
         // 等待一段时间
-        #1000000;
+        #10000;
 
-        // Send a byte (0x00) over rx line
         send_byte(8'h73);
-        // Wait for reception to complete
-        #1000000;
+        #5000000;
 
-        // Send another byte (0x73) over rx line
         send_byte(8'h03);
-        // Wait for reception to complete
-        #1000000;
+        #5000000;
 
-        // Send a byte (0x00) over rx line
-        send_byte(8'h74);
-        // Wait for reception to complete
-        #1000000;
+        send_byte(8'h73);
+        #5000000;
 
-        // Send another byte (0x0A) over rx line
-        send_byte(8'h00);
-        // Wait for reception to complete
-        #1000000;
+        send_byte(8'h01);
 
         // 等待运算和发送完成
-        #30000000;
+        #20000000;
 
         // End simulation
         $stop;
