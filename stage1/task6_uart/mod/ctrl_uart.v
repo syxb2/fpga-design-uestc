@@ -28,16 +28,6 @@ module ctrl_uart(clk, rst, rx_ready, rx_data, tx_ready, tx_data, y_to_led);
     initial begin
         rx_done <= 0;
         rx_cnt <= 0;
-        tx_cnt <= 0;
-        tx_state <= 0;
-        tx_ready <= 0;
-        tx_done = 1'b0;
-        d_cnt <= 0;
-        d_state <= 0;
-        d_done <= 0;
-        Ra <= 0;
-        Rb <= 0;
-        Rc <= 0;
         a <= 0;
         b <= 0;
         y <= 0;
@@ -96,6 +86,15 @@ module ctrl_uart(clk, rst, rx_ready, rx_data, tx_ready, tx_data, y_to_led);
     reg[1:0] d_state; // 0 表示空闲；1 表示运行中；2 表示已完成
     reg d_done;
 
+    initial begin
+        Ra <= 0;
+        Rb <= 0;
+        Rc <= 0;
+        d_cnt <= 0;
+        d_state <= 0;
+        d_done <= 0;
+    end
+
     always@(posedge clk or posedge rst) begin
         if (!rst) begin
             d_state <= 0;
@@ -150,9 +149,16 @@ module ctrl_uart(clk, rst, rx_ready, rx_data, tx_ready, tx_data, y_to_led);
 
     // tx 相关变量
     reg[25:0] tx_cnt; // 计数
-    reg end_cnt;
+    reg end_tx_cnt;
     reg[1:0] tx_state;
     reg tx_done;
+
+    initial begin
+        tx_cnt <= 0;
+        tx_state <= 0;
+        tx_ready <= 0;
+        tx_done = 1'b0;
+    end
 
     // 发送数据
     always @(posedge clk or negedge rst) begin
@@ -166,16 +172,16 @@ module ctrl_uart(clk, rst, rx_ready, rx_data, tx_ready, tx_data, y_to_led);
         else if (d_done && !tx_done) begin
             if (tx_cnt == TX_CNT - 1) begin
                 tx_cnt <= 0;
-                end_cnt = 1;
+                end_tx_cnt = 1;
                 tx_ready = 1;
             end
             else begin
                 tx_cnt <= tx_cnt + 1;
-                end_cnt = 0;
+                end_tx_cnt = 0;
                 tx_ready = 0;
             end
 
-            if (end_cnt) begin
+            if (end_tx_cnt) begin
                 case(tx_state)
                     0: begin // 先发送商低8位
                         tx_data <= y[7:0];

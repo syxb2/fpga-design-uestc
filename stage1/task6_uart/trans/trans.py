@@ -1,12 +1,12 @@
 import serial
 import time
 
-def send_data(ser, data):
+def send_data(ser, data) -> None:
     """发送8位数据到FPGA"""
     ser.write(data.to_bytes(1, byteorder='big'))
     print(f"Sent: {data}")
 
-def receive_data(ser):
+def receive_data(ser) -> int:
     """从FPGA接收8位数据"""
     if ser.in_waiting > 0:
         data = ser.read(1)
@@ -16,7 +16,7 @@ def receive_data(ser):
     else:
         return None
 
-def main():
+def main() -> None:
     # 配置串口
     ser = serial.Serial(
         port='/dev/tty.usbserial-110',  # 根据实际情况修改串口端口
