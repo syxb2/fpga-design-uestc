@@ -17,8 +17,8 @@ module rx_uart(clk, rst, rx, rx_data, rx_ready);
     parameter DATA = 2; // 数据位
     parameter STOP = 3; // 停止位
  
-    reg[1:0] state;// 现态
-    reg state_flag;
+    reg[1:0] state; // 现态
+    reg state_flag; // 执行完第一次之后置为 1，说明已经开始执行
         
     reg[25:0] bps_cnt;
     reg end_bps_cnt;
@@ -80,43 +80,6 @@ module rx_uart(clk, rst, rx, rx_data, rx_ready);
                 end_bps_cnt <= 0;
             end
 
-            // 状态机逻辑
-            case(state)
-                IDLE: begin
-                    if (!rx) begin
-                        state <= START;
-                    end
-                end
-
-                START: begin
-                    bit_max <= 1;
-                    if (end_bit_cnt) begin
-                        state <= DATA;
-                        bit_cnt <= 0;
-                        end_bit_cnt <= 0;
-                    end
-                end
-
-                DATA: begin
-                    bit_max <= BIT_MAX;
-                    if (end_bit_cnt) begin
-                        bit_cnt <= 0;
-                        state <= STOP;
-                        end_bit_cnt <= 0;
-                    end
-                end
-
-                STOP: begin
-                    bit_max <= 1;
-                    state_flag <= 1;
-                    if (end_bit_cnt) begin
-                        bit_cnt <= 0;
-                        state <= IDLE;
-                        end_bit_cnt <= 0;
-                    end
-                end
-            endcase
-
             // bit_cnt 逻辑
             if (end_bps_cnt) begin
                 if (state != IDLE) begin 
@@ -133,6 +96,43 @@ module rx_uart(clk, rst, rx, rx_data, rx_ready);
                     end_bit_cnt <= 0;
                 end
             end
+
+            // 状态机逻辑
+            case(state)
+                IDLE: begin
+                    if (!rx) begin
+                        state <= START;
+                    end
+                end
+
+                START: begin
+                    bit_max <= 1;
+                    if (end_bit_cnt) begin
+                        bit_cnt <= 0;
+                        end_bit_cnt <= 0;
+                        state <= DATA;
+                    end
+                end
+
+                DATA: begin
+                    bit_max <= BIT_MAX;
+                    if (end_bit_cnt) begin
+                        bit_cnt <= 0;
+                        end_bit_cnt <= 0;
+                        state <= STOP;
+                    end
+                end
+
+                STOP: begin
+                    bit_max <= 1;
+                    state_flag <= 1;
+                    if (end_bit_cnt) begin
+                        bit_cnt <= 0;
+                        end_bit_cnt <= 0;
+                        state <= IDLE;
+                    end
+                end
+            endcase
 
             // 数据接收逻辑
             if (end_bps_cnt && state == DATA) begin
