@@ -38,11 +38,11 @@ def main():
         data3 = int(input("请输入除数前两位："), 16)
         data4 = int(input("请输入除数后两位："), 16)
         send_data(ser, data1)
-        time.sleep(0.01)  # 等待0.01秒
+        time.sleep(0.1)  # 等待0.1秒
         send_data(ser, data2)
-        time.sleep(0.01)  # 等待0.01秒
+        time.sleep(0.1)  # 等待0.1秒
         send_data(ser, data3)
-        time.sleep(0.01)  # 等待0.01秒
+        time.sleep(0.1)  # 等待0.1秒
         send_data(ser, data4)
 
         # 等待2秒

@@ -22,6 +22,8 @@ module rx_uart(clk, rst, rx, rx_data, rx_ready);
         
     reg[25:0] bps_cnt;
     reg end_bps_cnt;
+    reg[25:0] bps_cnt_take;
+    reg end_bps_cnt_take;
     reg[3:0] bit_cnt;
     reg end_bit_cnt; // 接收 1 Byte 数据完成标志
     reg[3:0] bit_max;
@@ -35,10 +37,12 @@ module rx_uart(clk, rst, rx, rx_data, rx_ready);
         state <= IDLE;
         state_flag <= 0;
         bps_cnt <= 0;
+        bps_cnt_take <= BPS_MAX >> 1;
         bit_cnt <= 0;
         temp_data <= 0;
         end_bit_cnt <= 0;
         end_bps_cnt <= 0;
+        end_bps_cnt_take <= 0;
     end
     
     // 输入数据寄存
@@ -63,7 +67,7 @@ module rx_uart(clk, rst, rx, rx_data, rx_ready);
             temp_data <= 0;
             end_bit_cnt <= 0;
             end_bps_cnt <= 0;
-        end 
+        end
         else begin
             // bps_cnt 逻辑
             if (state != IDLE) begin 
@@ -78,6 +82,21 @@ module rx_uart(clk, rst, rx, rx_data, rx_ready);
             end
             else begin
                 end_bps_cnt <= 0;
+            end
+
+            // bps_cnt_take 逻辑
+            if (state != IDLE) begin
+                if (bps_cnt_take == BPS_MAX - 1) begin
+                    bps_cnt_take <= 0;
+                    end_bps_cnt_take <= 1;
+                end
+                else begin
+                    bps_cnt_take <= bps_cnt_take + 1;
+                    end_bps_cnt_take <= 0;
+                end
+            end
+            else begin
+                end_bps_cnt_take <= 0;
             end
 
             // bit_cnt 逻辑
@@ -135,7 +154,7 @@ module rx_uart(clk, rst, rx, rx_data, rx_ready);
             endcase
 
             // 数据接收逻辑
-            if (end_bps_cnt && state == DATA) begin
+            if (end_bps_cnt_take && state == DATA) begin
                 temp_data[bit_cnt] <= rx_r1;
             end
         end
