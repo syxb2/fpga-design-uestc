@@ -18,6 +18,15 @@ module top_tb();
     wire[6:0] led_out; // led 编码输出
     wire[5:0] dig; // 位选信号
 
+    // a 用于存储被除数 16bits
+    reg[15:0] a;
+    reg[23:0] led_in;
+
+    initial begin
+        led_in = 24'h000000;
+        led_in[15:0] = a;
+    end
+
     // 实例化被测试模块
     rx_uart u_rx(
         .clk(clk),
@@ -48,7 +57,7 @@ module top_tb();
     led_encoder u_led_encoder(
         .clk    (clk),
         .rst    (rst),
-        .in     (y),
+        .in     (led_in),
         .out    (led_out),
         .dig    (dig)
     );

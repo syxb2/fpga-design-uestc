@@ -1,7 +1,7 @@
 /**
  * @brief 控制模块
  */
-module ctrl_uart(clk, rst, rx_ready, rx_data, tx_ready, tx_data, y_to_led);
+module ctrl_uart(clk, rst, rx_ready, rx_data, tx_ready, tx_data, y_to_led, a);
     // parameter TX_CNT = 41664; // 波特率对应周期数 5208 * 8
     parameter TX_CNT = 166576;
     parameter BIT_MAX = 16; // 数据位数
@@ -20,7 +20,7 @@ module ctrl_uart(clk, rst, rx_ready, rx_data, tx_ready, tx_data, y_to_led);
     reg rx_done; // 接收完成标志
     reg[1:0] rx_cnt;
 
-    reg[BIT_MAX-1:0] a; // 用于存储被除数 16bits
+    output reg[BIT_MAX-1:0] a; // 用于存储被除数 16bits
     reg[BIT_MAX-1:0] b; // 用于存储除数 16bits
     reg[BIT_MAX-1:0] y; // 用于存储商; 16bits
     reg[BIT_MAX-1:0] r; // 用于存储余数; 16bits
