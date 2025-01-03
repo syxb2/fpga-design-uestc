@@ -13,13 +13,7 @@ module top(clk, rst, in, out, led_out, dig);
     wire[7:0] tx_data;
     wire[23:0] y;
 
-    reg[15:0] a;
-    reg[23:0] led_in;
-
-    initial begin
-        led_in = 24'h000000;
-        led_in[15:0] = a;
-    end
+    wire[23:0] a;
 
     // 实例化被测试模块
     rx_uart u_rx(
@@ -37,7 +31,8 @@ module top(clk, rst, in, out, led_out, dig);
         .rx_data    (rx_data),
         .tx_ready   (tx_ready),
         .tx_data    (tx_data),
-        .y_to_led   (y)
+        .y_to_led   (y),
+        .a          (a)
     );
 
     tx_uart u_tx(
@@ -51,7 +46,7 @@ module top(clk, rst, in, out, led_out, dig);
     led_encoder u_led_encoder (
         .clk    (clk),
         .rst    (rst),
-        .in     (led_in),
+        .in     (a),
         .out    (led_out),
         .dig    (dig)
     );

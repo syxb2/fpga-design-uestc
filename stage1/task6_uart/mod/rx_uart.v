@@ -37,7 +37,7 @@ module rx_uart(clk, rst, rx, rx_data, rx_ready);
         state <= IDLE;
         state_flag <= 0;
         bps_cnt <= 0;
-        bps_cnt_take <= BPS_MAX / 2;
+        bps_cnt_take <= BPS_MAX >> 1;
         bit_cnt <= 0;
         temp_data <= 0;
         end_bit_cnt <= 0;
@@ -67,7 +67,7 @@ module rx_uart(clk, rst, rx, rx_data, rx_ready);
             temp_data <= 0;
             end_bit_cnt <= 0;
             end_bps_cnt <= 0;
-        end 
+        end
         else begin
             // bps_cnt 逻辑
             if (state != IDLE) begin 
