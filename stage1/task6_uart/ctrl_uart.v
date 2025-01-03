@@ -86,65 +86,7 @@ module ctrl_uart(clk, rst, rx_ready, rx_data, tx_ready, tx_data, y_to_led);
         end
     end
 
-    /* ------------------------------ devision ------------------------------ */
 
-    // devision 相关变量
-    reg d_done;
-    reg[2*BIT_MAX-1:0] Ra; // 存储被除数和余数
-    reg[BIT_MAX-1:0] Rb; // 存储除数
-    reg[BIT_MAX-1:0] Rc; // 存储商
-    reg[5:0] d_cnt; // 计数器，用于控制移位次数（最多16次）
-    reg[1:0] d_state; // 0 表示空闲；1 表示运行中；2 表示已完成
-
-    always@(posedge clk or posedge rst) begin
-        if (!rst) begin
-            d_state <= 0;
-            d_done <= 0;
-            Ra <= 0;
-            Rb <= 0;
-            Rc <= 0;
-            y_to_led <= 0;
-        end
-        else begin
-            case (d_state)
-                0: begin
-                    d_cnt <= 16;
-                    if (rx_done) begin
-                        Ra = {16'h0000, a};
-                        Rb = b;
-                        Rc = 16'h0000;
-                        d_state <= 1;
-                    end
-                end
-
-                1: begin
-                    if (d_cnt != 0) begin
-                        Ra = Ra << 1;
-                        Rc = Rc << 1;
-
-                        if (Ra[31:16] >= Rb) begin
-                            Ra[31:16] = Ra[31:16] - Rb;
-                            Rc[0] = 1;
-                        end
-                        else begin
-                            Rc[0] = 0;
-                        end
-                        d_cnt <= d_cnt - 1;
-                    end
-                    else begin
-                        y = Rc;
-                        y_to_led[15:0] = Rc;
-                        r[15:0] = Ra[31:16];
-                        d_state <= 2;
-                    end
-                end
-
-                2: begin
-                    d_done <= 1;
-                end
-            endcase
-        end
-    end
 
     /* ------------------------------ tx ------------------------------ */
 

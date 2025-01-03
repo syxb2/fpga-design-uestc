@@ -18,8 +18,6 @@ module top_tb();
     wire[6:0] led_out; // led 编码输出
     wire[5:0] dig; // 位选信号
 
-    wire[23:0] a;
-
     // 实例化被测试模块
     rx_uart u_rx(
         .clk(clk),
@@ -36,8 +34,7 @@ module top_tb();
         .rx_data(rx_data),
         .tx_ready(tx_ready),
         .tx_data(tx_data),
-        .y_to_led(y),
-        .a(a)
+        .y_to_led(y)
     );
 
     tx_uart u_tx(
@@ -51,7 +48,7 @@ module top_tb();
     led_encoder u_led_encoder(
         .clk    (clk),
         .rst    (rst),
-        .in     (a),
+        .in     (y),
         .out    (led_out),
         .dig    (dig)
     );
