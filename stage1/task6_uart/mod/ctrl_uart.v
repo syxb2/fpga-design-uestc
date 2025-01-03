@@ -32,6 +32,12 @@ module ctrl_uart(clk, rst, rx_ready, rx_data, tx_ready, tx_data, y_to_led);
         tx_state <= 0;
         tx_ready <= 0;
         tx_done = 1'b0;
+        d_cnt <= 0;
+        d_state <= 0;
+        d_done <= 0;
+        Ra <= 0;
+        Rb <= 0;
+        Rc <= 0;
         a <= 0;
         b <= 0;
         y <= 0;
@@ -83,12 +89,12 @@ module ctrl_uart(clk, rst, rx_ready, rx_data, tx_ready, tx_data, y_to_led);
     /* ------------------------------ devision ------------------------------ */
 
     // devision 相关变量
-    reg d_done;
     reg[2*BIT_MAX-1:0] Ra; // 存储被除数和余数
     reg[BIT_MAX-1:0] Rb; // 存储除数
     reg[BIT_MAX-1:0] Rc; // 存储商
     reg[5:0] d_cnt; // 计数器，用于控制移位次数（最多16次）
     reg[1:0] d_state; // 0 表示空闲；1 表示运行中；2 表示已完成
+    reg d_done;
 
     always@(posedge clk or posedge rst) begin
         if (!rst) begin
