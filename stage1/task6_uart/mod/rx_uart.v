@@ -29,9 +29,6 @@ module rx_uart(clk, rst, rx, rx_data, rx_ready);
     reg[3:0] bit_max;
  
     reg[BIT_MAX-1:0] temp_data; // 输入数据临时缓存
- 
-    reg rx_r0; // 输入数据同步寄存
-    reg rx_r1;
 
     initial begin
         state <= IDLE;
@@ -45,18 +42,6 @@ module rx_uart(clk, rst, rx, rx_data, rx_ready);
         end_bps_cnt_take <= 0;
     end
     
-    // 输入数据寄存
-    always @(posedge clk or negedge rst) begin 
-        if (!rst) begin
-            rx_r0 <= 1;
-            rx_r1 <= 1;
-        end 
-        else begin 
-           rx_r0 <= rx;
-           rx_r1 <= rx_r0;
-        end 
-    end
-
     // 时序逻辑描述状态转移
     always @(posedge clk or negedge rst) begin
         if (!rst) begin
@@ -84,7 +69,7 @@ module rx_uart(clk, rst, rx, rx_data, rx_ready);
                 end_bps_cnt <= 0;
             end
 
-            // bps_cnt_take 逻辑
+            // bps_cnt_take 逻辑：每 bit 在 1/2 周期处采样
             if (state != IDLE) begin
                 if (bps_cnt_take == BPS_MAX - 1) begin
                     bps_cnt_take <= 0;
@@ -155,7 +140,7 @@ module rx_uart(clk, rst, rx, rx_data, rx_ready);
 
             // 数据接收逻辑
             if (end_bps_cnt_take && state == DATA) begin
-                temp_data[bit_cnt] <= rx_r1;
+                temp_data[bit_cnt] <= rx;
             end
         end
     end
