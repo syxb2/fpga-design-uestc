@@ -37,6 +37,10 @@ FPGA：
 
 * xc7a100tfgg484-2
 
+### Participate
+
+If you find some bugs in the codes and want to participate in this project, welcome to sent pull-request.
+
 ### License
 
 MIT
