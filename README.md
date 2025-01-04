@@ -33,7 +33,7 @@ TODO
 * MacOS Sequoia(15.1)
 * VSCode
 
-FPGA：
+FPGA:
 
 * xc7a100tfgg484-2
 
