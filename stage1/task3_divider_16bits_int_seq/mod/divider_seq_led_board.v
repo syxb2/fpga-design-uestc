@@ -1,4 +1,4 @@
-module devision_seq_led_board(clk, rst, start, done, led1, led2, led3, led4, out);
+module divider_seq_led_board(clk, rst, start, done, led1, led2, led3, led4, out);
     parameter WIDTH = 16;
 
     input wire clk;

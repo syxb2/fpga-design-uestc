@@ -1,10 +1,10 @@
 /**
- * 16bits int devision with sequential logic
+ * 16bits int divider with sequential logic
  * 
  * Copyright © 2024 Bai Jiale 578767478@qq.com
  * License: MIT
  */
-module devision_seq(clk, rst, start, done, a, b, y, remainder);
+module divider_seq(clk, rst, start, done, a, b, y, remainder);
     parameter WIDTH = 16;
 
     input wire clk;

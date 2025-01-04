@@ -1,8 +1,8 @@
 `timescale 1ns/1ns
-`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task3_devision_16bits_int_comb/mod/devision_comb.v"
-`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task3_devision_16bits_int_comb/mod/led_encoder.v"
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task3_divider_16bits_int_comb/mod/divider_comb.v"
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task3_divider_16bits_int_comb/mod/led_encoder.v"
 
-module devision_comb_tb;
+module divider_comb_tb;
     // 参数定义
     parameter WIDTH = 16;
 
@@ -20,7 +20,7 @@ module devision_comb_tb;
     wire[6:0] out4;
 
     // 实例化被测试模块
-    devision_comb uut(
+    divider_comb uut(
         .a          (a),
         .b          (b),
         .y          (y),
@@ -38,7 +38,7 @@ module devision_comb_tb;
     // 初始化输入信号
     initial begin
         $dumpfile("wave.vcd");
-        $dumpvars(0, devision_comb_tb);
+        $dumpvars(0, divider_comb_tb);
         // 打印信号头
         $monitor("time=%0d, a=%d, b=%d, y=%d, remainder=%d", $time, a, b, y, remainder);
 

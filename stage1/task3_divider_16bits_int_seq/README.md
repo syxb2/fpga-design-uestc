@@ -9,17 +9,17 @@
 #### Version 1
 
 ```
-./devision_seq.v
+./divider_seq.v
 ./led_encoder.v
-./test/devision_seq_tb.v
+./test/divider_seq_tb.v
 ```
 
 #### Version 2
 
 ```
-./devision_seq_board.v
+./divider_seq_board.v
 ./led_encoder_board.v
-./test/devision_seq_board_tb.v
+./test/divider_seq_board_tb.v
 ```
 
 #### Version 3
@@ -27,8 +27,8 @@
 source files
 
 ```
-./devision_seq_led_board.v
-./test/devision_seq_led_board_tb.v
+./divider_seq_led_board.v
+./test/divider_seq_led_board_tb.v
 ```
 
 vivado top file
@@ -60,20 +60,20 @@ make
 # V sources:
 # Version 1
 # V_SOURCES = \
-# ./test/devision_seq_tb.v \
-# ./devision_seq.v \
+# ./test/divider_seq_tb.v \
+# ./divider_seq.v \
 # ./led_encoder.v
 
 # Version 2
 # V_SOURCES = \
-# ./test/devision_seq_board_tb.v \
-# ./devision_seq_board.v \
+# ./test/divider_seq_board_tb.v \
+# ./divider_seq_board.v \
 # ./led_encoder_board.v
 
 # Version 3
 V_SOURCES = \
-./test/devision_seq_led_board_tb.v \
-./devision_seq_led_board.v
+./test/divider_seq_led_board_tb.v \
+./divider_seq_led_board.v
 ```
 
 ### Notes

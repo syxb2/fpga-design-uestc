@@ -1,9 +1,9 @@
 `timescale 1ns / 1ns
 // T = 20ns
 // f = 50MHz
-`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task3_devision_16bits_int_seq/mod/devision_seq_led_board.v"
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task3_divider_16bits_int_seq/mod/divider_seq_led_board.v"
 
-module devision_seq_led_board_tb();
+module divider_seq_led_board_tb();
     // 参数定义
     parameter WIDTH = 16;
 
@@ -21,7 +21,7 @@ module devision_seq_led_board_tb();
     wire [6:0] out;
 
     // 实例化被测试模块
-    devision_seq_led_board uut (
+    divider_seq_led_board uut (
         .clk    (clk),
         .rst    (rst),
         .start  (start),
@@ -36,7 +36,7 @@ module devision_seq_led_board_tb();
     // 时钟生成
     initial begin
         $dumpfile("wave.vcd");
-        $dumpvars(0, devision_seq_led_board_tb);
+        $dumpvars(0, divider_seq_led_board_tb);
         clk = 0;
         forever #10 clk = ~clk; // 20ns 周期的时钟
     end

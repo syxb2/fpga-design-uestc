@@ -76,9 +76,9 @@ module ctrl_uart(clk, rst, rx_ready, rx_data, tx_ready, tx_data, y_to_led);
         end
     end
 
-    /* ------------------------------ devision ------------------------------ */
+    /* ------------------------------ divider ------------------------------ */
 
-    // devision 相关变量
+    // divider 相关变量
     reg[2*BIT_MAX-1:0] Ra; // 存储被除数和余数
     reg[BIT_MAX-1:0] Rb; // 存储除数
     reg[BIT_MAX-1:0] Rc; // 存储商

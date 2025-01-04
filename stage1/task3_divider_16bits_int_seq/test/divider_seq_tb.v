@@ -1,7 +1,7 @@
 `timescale 1ns/1ns
-`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task6_uart/mod/devision.v"
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task3_divider_16bits_int_seq/mod/divider_seq.v"
 
-module devision_tb;
+module divider_tb;
     reg clk;
     reg rst;
     reg start;
@@ -11,8 +11,8 @@ module devision_tb;
     wire [15:0] y;
     wire [15:0] remainder;
 
-    // Instantiate the devision_seq module
-    devision_seq uut (
+    // Instantiate the divider_seq module
+    divider_seq uut (
         .clk(clk),
         .rst(rst),
         .start(start),
@@ -26,7 +26,7 @@ module devision_tb;
     // Clock generation
     initial begin
         $dumpfile("wave.vcd");
-        $dumpvars(0, devision_tb);
+        $dumpvars(0, divider_tb);
         clk = 0;
         forever #10 clk = ~clk; // 50 MHz clock
     end

@@ -1,5 +1,5 @@
 /** 
- * 16bits int devision with combinational logic
+ * 16bits int divider with combinational logic
  * a: dividend
  * b: divisor
  * y: quotient
@@ -8,7 +8,7 @@
  * Copyright © 2024 Bai Jiale 578767478@qq.com
  * License: MIT
  */
-module devision_comb(a, b, y, remainder);
+module divider_comb(a, b, y, remainder);
     parameter WIDTH = 16;
 
     input wire[WIDTH-1:0] a;

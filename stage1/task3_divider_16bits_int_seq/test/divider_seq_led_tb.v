@@ -3,10 +3,10 @@
  * License: MIT
  */
 `timescale 1ns/1ns
-`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task3_devision_16bits_int_seq/mod/devision_seq.v"
-`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task3_devision_16bits_int_seq/mod/led_encoder.v"
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task3_divider_16bits_int_seq/mod/divider_seq.v"
+`include "/Users/baijiale/Documents/Code/fpga-design-uestc/stage1/task3_divider_16bits_int_seq/mod/led_encoder.v"
 
-module devision_seq_tb();
+module divider_seq_tb();
     reg clk;
     reg rst;
     reg start;
@@ -20,7 +20,7 @@ module devision_seq_tb();
     wire[6:0] out3;
     wire[6:0] out4;
 
-    devision_seq uut(
+    divider_seq uut(
         .clk        (clk),
         .rst        (rst),
         .start      (start),
@@ -41,7 +41,7 @@ module devision_seq_tb();
 
     initial begin
         $dumpfile("wave.vcd");
-        $dumpvars(0, devision_seq_tb);
+        $dumpvars(0, divider_seq_tb);
 
         clk = 0;
         rst = 0;

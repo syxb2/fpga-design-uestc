@@ -8,13 +8,28 @@ WAVE_TARGET = wave.vcd
 BUILD_DIR = ./build
 
 # V sources:
+# Version 1
 V_SOURCES = \
-./test/devision_comb_tb.v \
+./test/divider_seq_led_tb.v \
+# Version 2
+# V_SOURCES = \
+# ./test/divider_seq_board_tb.v \
+# Version 3
+# V_SOURCES = \
+# ./test/divider_seq_led_board_tb.v \
 
 # V includes
+# version1
 V_INCLUDES = \
-./mod/devision_comb.v \
+./mod/divider_seq.v \
 ./mod/led_encoder.v \
+# version2
+# V_INCLUDES = \
+# ./mod/divider_seq_board.v \
+# ./mod/led_encoder_board.v \
+# version3
+# V_INCLUDES = \
+# ./mod/divider_seq_led_board.v \
 
 # compiler
 CC = iverilog
