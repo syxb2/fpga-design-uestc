@@ -33,15 +33,15 @@
  * 
  */
 module control_unit (zero, opcode, m2reg, pcsrc, wmem, aluctrl, alusrc, wreg, jal);
-    input wire zero; // 结果是否为 0
-    input wire [3:0] opcode; // 操作码
-    output reg m2reg; // 选择写回寄存器的来源
-    output reg [1:0] pcsrc; // 选择 PC 下一条地址的产生方式
-    output reg wmem; // 写内存
-    output reg [2:0] aluctrl; // ALU 控制：加、减、按位与、按位或、等于、小于等于，共 6 种
-    output reg alusrc; // 选择运算操作数
-    output reg wreg; // 写寄存器
-    output reg jal; // 选择写回数据来源
+    input wire zero;
+    input wire [3:0] opcode;
+    output reg m2reg;
+    output reg [1:0] pcsrc;
+    output reg wmem;
+    output reg [2:0] aluctrl;
+    output reg alusrc;
+    output reg wreg;
+    output reg jal;
 
     parameter NULL = 0;
 
