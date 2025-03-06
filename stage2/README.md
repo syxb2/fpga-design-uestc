@@ -1,5 +1,9 @@
 # 第四学期（课程第二阶段）
 
+https://blog.csdn.net/qq_51103378/article/details/131383341?spm=1001.2014.3001.5501
+
+https://github.com/liangkangnan/tinyriscv/tree/master   
+
 ## Notes
 
 ### 指令集
@@ -27,7 +31,7 @@ ori   |  1111
 
 寄存器 |  编码  |   说明
 ------|--------|-------
-r0    |  0000  |  恒0寄存器
+r0    |  0000  |  恒 0 寄存器
 r1    |  0001  |  目的（返回地址）寄存器 rd
 r2    |  0010  |  栈指针寄存器 sp
 r3    |  0011  |  a0 还作为保存函数参数或返回值
