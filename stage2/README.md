@@ -4,6 +4,18 @@ https://blog.csdn.net/qq_51103378/article/details/131383341?spm=1001.2014.3001.5
 
 https://github.com/liangkangnan/tinyriscv/tree/master   
 
+## design drawing
+
+![](design_drawing.png)
+
+* ALU op
+    * 0 - direct
+    * 1 - add
+    * 2 - sub
+    * 3 - and
+    * 4 - or
+    * 5 - compare
+
 ## Notes
 
 ### 指令集
